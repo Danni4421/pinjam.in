@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400&display=swap');
+
+:root {
+  --base: #993935;
+  --secondary: #d88c07;
+  --light: #e1e1e1;
+  --dark: #212121;
+  --white: #ffffff;
+  --roboto: Roboto;
+  --bebas-neue: 'Bebas Neue';
+}
+
+body {
+  font-family: var(--roboto) !important;
+}
+
+.content {
+  min-height: 65vh;
+}
+
+.tagline {
+  font-family: var(--bebas-neue);
+  font-size: 5em;
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+
+.second-tagline {
+  font-size: 2rem;
+  font-family: var(--roboto);
+  font-weight: 300;
+}
+
+.btn-magenta {
+  background-color: var(--base) !important;
+  color: var(--white);
+  border: none;
+}
+
+.btn-magenta:hover {
+  background-color: var(--base) !important;
+  filter: brightness(80%);
+  transition: 0.5s;
+  color: var(--white);
+}
+
+.btn-secondary {
+  background-color: var(--secondary) !important;
+  color: var(--white);
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary) !important;
+  filter: brightness(80%);
+  transition: 0.5s;
+  color: var(--white);
+}
+
+.btn-outline-secondary {
+  border: 1px solid var(--secondary);
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--secondary) !important;
+  color: var(--white);
+  transition: 0.5s;
+  border: none;
+}

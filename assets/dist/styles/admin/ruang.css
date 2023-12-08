@@ -1,0 +1,47 @@
+.card-body-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem;
+  margin: 0 7px 0 7px;
+  width: 98%;
+  border-radius: 30px 0 5% 5%;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.room-image {
+  max-width: 100%;
+  height: auto;
+  max-height: 200px;
+}
+
+.table-dosen th,
+.table-dosen td {
+  text-align: center;
+  max-width: fit-content;
+}
+
+.table-dosen tbody tr:hover {
+  background-color: #f5f5f5;
+  /* Hover background color for rows */
+}
+
+.table-dosen tbody tr td:last-child {
+  text-align: center;
+  /* Center-align the last column (Foto Dosen) */
+}
+
+.btn-primary {
+  background-color: #007bff;
+  /* Button background color */
+  color: #fff;
+  /* Button text color */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  /* Button background color on hover */
+  color: #fff;
+  /* Button text color on hover */
+}
