@@ -13,7 +13,13 @@ $container = [
         ],
 
         # UseCase
-        'UseCase' => [],
+        'UseCase' => [
+            # Interfaces
+            'UseCase',
+
+            # Use Cases
+            'RegisterUseCase'
+        ],
     ],
 
     /**
@@ -23,15 +29,28 @@ $container = [
     'Domains' => [
         # Entities
         'Entities' => [
+            'HasRequest',
             'HasRole',
+            'UserDetails',
             'User',
-            'UserDetails'
+            'Dosen',
+            'Peminjam',
+            'Fasilitas',
+            'JamKuliah',
+            'MataKuliah',
+            'Jadwal',
+            'Ruang',
+            'RuangKelas',
+            'RuangDosen',
+            'Peminjaman'
         ],
 
         # Repository Interfaces
         'IRepositories' => [
             'Repository',
-            'IUserRepository'
+            'IUserRepository',
+            'IPeminjamanRepository',
+            'IRuangRepository'
         ]
     ],
 
@@ -57,7 +76,13 @@ $container = [
 
         # Repositories
         'Repositories' => [
-            'UserRepository'
+            'AuthenticationRepository',
+            'UserRepository',
+            'DosenRepository',
+            'RuangRepository',
+            'RuangKelasRepository',
+            'RuangDosenRepository',
+            'PeminjamanRepository'
         ],
 
         # Security

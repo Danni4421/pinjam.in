@@ -7,25 +7,37 @@ class UserDetails
     private string $alamat;
     private string $noTelp;
     private string $fotoProfil;
+    private ?string $kodeRuang;
+    private int $isDosen;
 
     /**
+     * @param string $nomorInduk
      * @param string $namaLengkap
      * @param string $alamat
      * @param string $noTelp
-     * @param $fotoProfil
+     * @param string $fotoProfil
+     * @param string $kodeRuang
+     * @param int $isDosen
      */
-    public function __construct($nomorInduk, $namaLengkap, $alamat, $noTelp, $fotoProfil)
+    public function __construct($nomorInduk, $namaLengkap, $alamat, $noTelp, $fotoProfil, $kodeRuang = null, $isDosen = 0)
     {
         $this->nomorInduk = $nomorInduk;
         $this->namaLengkap = $namaLengkap;
         $this->alamat = $alamat;
         $this->noTelp = $noTelp;
         $this->fotoProfil = $fotoProfil;
+        $this->kodeRuang = $kodeRuang;
+        $this->isDosen = $isDosen;
     }
 
     public function getNomorInduk()
     {
         return $this->nomorInduk;
+    }
+
+    public function getKodeRuang()
+    {
+        return $this->kodeRuang;
     }
 
     public function getNamaLengkap()
@@ -46,5 +58,10 @@ class UserDetails
     public function getFotoProfil()
     {
         return $this->fotoProfil;
+    }
+
+    public function verifyIsDosen()
+    {
+        return $this->isDosen;
     }
 }

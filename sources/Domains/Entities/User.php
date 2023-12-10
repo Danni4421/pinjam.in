@@ -6,6 +6,7 @@ class User implements HasRole
     private ?string $username;
     private ?string $email;
     private ?string $password;
+    private ?string $salt;
     private ?string $role;
     private ?UserDetails $userDetails;
 
@@ -14,15 +15,17 @@ class User implements HasRole
      * @param ?string $username
      * @param ?string $email
      * @param ?string $password
+     * @param ?string $salt
      * @param ?string $role
      * @param UserDetails $userDetails
      */
-    public function __construct($id, $username=null, $email=null, $password=null, $role=null, $userDetails=null)
+    public function __construct($id, $username = null, $email = null, $password = null, $salt = null, $role = null, $userDetails = null)
     {
         $this->id = $id;
         $this->username = $username;
         $this->email = $email;
         $this->password = $password;
+        $this->salt = $salt;
         $this->role = $role;
         $this->userDetails = $userDetails;
     }
@@ -45,6 +48,11 @@ class User implements HasRole
     public function getPassword()
     {
         return $this->password;
+    }
+
+    public function getSalt()
+    {
+        return $this->salt;
     }
 
     public function getRole()
