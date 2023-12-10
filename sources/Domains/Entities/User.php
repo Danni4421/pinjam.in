@@ -3,21 +3,21 @@
 class User implements HasRole
 {
     private int $id;
-    private string $username;
-    private string $email;
-    private string $password;
-    private string $role;
-    private UserDetails $userDetails;
+    private ?string $username;
+    private ?string $email;
+    private ?string $password;
+    private ?string $role;
+    private ?UserDetails $userDetails;
 
     /**
      * @param int $id,
-     * @param string $username
-     * @param string $email
-     * @param string $password
-     * @param string $role
+     * @param ?string $username
+     * @param ?string $email
+     * @param ?string $password
+     * @param ?string $role
      * @param UserDetails $userDetails
      */
-    public function __construct($id, $username, $email, $password, $role, $userDetails)
+    public function __construct($id, $username=null, $email=null, $password=null, $role=null, $userDetails=null)
     {
         $this->id = $id;
         $this->username = $username;

@@ -3,7 +3,7 @@
 class RuangDosen extends Ruang
 {
 
-    /** @var Dosen[] */
+    /** @var ?Dosen[] */
     private $dosen;
 
     /**
@@ -13,13 +13,15 @@ class RuangDosen extends Ruang
      * @param int $lantai
      * @param Dosen[] $dosen
      */
-    public function __construct($kodeRuang, $namaRuang, $kapasitas, $lantai, $dosen)
+    public function __construct($kodeRuang, $namaRuang=null, $kapasitas=null, $lantai=null, $dosen=[], $fotoRuang=null, $fasilitas=null)
     {
         parent::__construct(
             kodeRuang: $kodeRuang,
             namaRuang: $namaRuang,
             kapasitas: $kapasitas,
-            lantai: $lantai
+            lantai: $lantai,
+            fotoRuang: $fotoRuang,
+            fasilitas: $fasilitas,
         );
 
         $this->dosen = $dosen;

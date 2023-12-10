@@ -2,7 +2,7 @@
 
 class RuangKelas extends Ruang
 {
-    /** @var Jadwal[] */
+    /** @var ?Jadwal[] */
     private $jadwal;
 
     /**
@@ -10,23 +10,32 @@ class RuangKelas extends Ruang
      * @param string $namaRuang
      * @param int $kapasitas
      * @param int $lantai
-     * @param Jadwal[] $dosen
+     * @param Jadwal[] $jadwal
      */
-    public function __construct($kodeRuang, $namaRuang, $kapasitas, $lantai, $jadwal)
+    public function __construct($kodeRuang, $namaRuang=null, $kapasitas=null, $lantai=null, $jadwal=[], $fotoRuang=null, $fasilitas=null)
     {
         parent::__construct(
             kodeRuang: $kodeRuang,
             namaRuang: $namaRuang,
             kapasitas: $kapasitas,
-            lantai: $lantai
+            lantai: $lantai,
+            fotoRuang: $fotoRuang,
+            fasilitas: $fasilitas
         );
 
         $this->jadwal = $jadwal;
     }
-
+    
     public function getJadwal()
     {
         return $this->jadwal;
+    }
+
+    /**
+     * @param Jadwal[] $jadwal
+     */
+    public function setJadwal($jadwal){
+        $this->jadwal = $jadwal;
     }
 
     public function toJSON()

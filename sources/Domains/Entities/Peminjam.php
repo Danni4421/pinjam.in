@@ -2,10 +2,10 @@
 
 class Peminjam extends User
 {
-    private string $instansi;
-    private string $logoInstansi;
+    private ?string $instansi;
+    private ?string $logoInstansi;
 
-    public function __construct($id, $username, $email, $password, $role, $userDetails, $instansi, $logoInstansi)
+    public function __construct($id, $username=null, $email=null, $password=null, $role=null, $userDetails=null, $instansi=null, $logoInstansi=null)
     {
         parent::__construct(
             id: $id,
