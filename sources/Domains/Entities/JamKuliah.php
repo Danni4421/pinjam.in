@@ -3,15 +3,15 @@
 class JamKuliah
 {
     private int $jkId;
-    private DateTime $jamMulai;
-    private DateTime $jamSelesai;
+    private ?DateTime $jamMulai;
+    private ?DateTime $jamSelesai;
 
     /**
      * @param int $jkId
-     * @param DateTime $jamMulai
-     * @param DateTime $jamSelesai
+     * @param ?DateTime $jamMulai
+     * @param ?DateTime $jamSelesai
      */
-    public function __construct($jkId, $jamMulai, $jamSelesai)
+    public function __construct($jkId, $jamMulai = null, $jamSelesai = null)
     {
         $this->jkId = $jkId;
         $this->jamMulai = $jamMulai;

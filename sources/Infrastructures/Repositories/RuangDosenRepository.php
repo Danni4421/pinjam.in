@@ -1,6 +1,6 @@
 <?php
 
-class RuangDosenService extends RuangService
+class RuangDosenRepository extends RuangRepository
 {
     public function __construct(MySQL $database)
     {
@@ -13,37 +13,36 @@ class RuangDosenService extends RuangService
     public function get()
     {
         $this->database->query(
-            sql: 'SELECT * FROM ruang WHERE is_ruang_dosen = 1',
+            sql: "SELECT * FROM ruang WHERE is_ruang_dosen = 1",
         );
 
         $result = $this->database->result();
         $ruangan = [];
 
         while ($row = $result->fetch_assoc()) {
-            $ruang_kelas = new RuangDosen(
+            $ruangan[] = new RuangDosen(
                 kodeRuang: $row["kode_ruang"],
                 namaRuang: $row["nama_ruang"],
                 kapasitas: $row["kapasitas"],
                 lantai: $row["lantai"],
                 fotoRuang: $row["foto_ruang"],
+                fasilitas: $this->getFasilitas(kodeRuang: $row["kode_ruang"]),
             );
-
-            $ruangan[] = $ruang_kelas;
         }
 
         return $ruangan;
     }
 
     /**
-     * @param string $kode_ruang
+     * @param string $kodeRuang
      * @return RuangDosen
      */
-    public function getById($kode_ruang)
+    public function getById($kodeRuang)
     {
         $this->database->query(
-            sql: 'SELECT * FROM ruang WHERE is_ruang_dosen = 1 AND kode_ruang = ?',
+            sql: "SELECT nama_ruang, kapasitas, lantai, foto_ruang FROM ruang WHERE is_ruang_dosen = 1 AND kode_ruang = ?",
             params: [
-                $kode_ruang
+                $kodeRuang
             ]
         );
 
@@ -51,32 +50,33 @@ class RuangDosenService extends RuangService
         $ruang = $ruang_result->fetch_assoc();
 
         $ruang = new RuangDosen(
-            kodeRuang: $ruang["kode_ruang"],
+            kodeRuang: $kodeRuang,
             namaRuang: $ruang["nama_ruang"],
             kapasitas: $ruang["kapasitas"],
             lantai: $ruang["lantai"],
             fotoRuang: $ruang["foto_ruang"],
-            fasilitas: $this->getFasilitas(kode_ruang: $kode_ruang)
+            fasilitas: $this->getFasilitas(kodeRuang: $kodeRuang),
+            dosen: $this->getDosen(kodeRuang: $kodeRuang)
         );
 
         return $ruang;
     }
 
     /**
-     * @param string $kode_ruang
+     * @param string $kodeRuang
      * @return array
      */
-    public function getDosen($kode_ruang)
+    public function getDosen($kodeRuang)
     {
         $this->database->query(
-            sql: 'SELECT u.id user_id, u.username, u.email,
+            sql: "SELECT u.id user_id, u.username, u.email, u.level,
             ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil 
             FROM users u 
             LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id 
             LEFT OUTER JOIN ruang r ON r.kode_ruang = ud.kode_ruang 
-            WHERE r.kode_ruang = ?',
+            WHERE r.kode_ruang = ?",
             params: [
-                $kode_ruang,
+                $kodeRuang,
             ]
         );
 
@@ -84,10 +84,11 @@ class RuangDosenService extends RuangService
         $list_dosen = [];
 
         while ($row = $result->fetch_assoc()) {
-            $dosen = new Dosen(
+            $list_dosen[] = new Dosen(
                 id: $row["user_id"],
                 username: $row["username"],
                 email: $row["email"],
+                role: $row["level"],
                 userDetails: new UserDetails(
                     nomorInduk: $row["nomor_induk"],
                     namaLengkap: $row["nama_lengkap"],
@@ -96,22 +97,21 @@ class RuangDosenService extends RuangService
                     fotoProfil: $row["foto_profil"],
                 )
             );
-            $list_dosen[] = $dosen;
         }
 
         return $list_dosen;
     }
 
     /**
-     * @param string $kode_ruang
+     * @param string $kodeRuang
      * @return void
      */
-    public function deleteDosen($kode_ruang)
+    public function deleteDosen($kodeRuang)
     {
         $this->database->query(
             sql: 'UPDATE userdetails SET kode_ruang = null WHERE kode_ruang = ?',
             params: [
-                $kode_ruang
+                $kodeRuang
             ]
         );
     }

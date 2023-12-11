@@ -3,9 +3,12 @@
 class RequestContainer
 {
     private static array $requests = [
-        /***
-     * Requests
-     */
+        # Requests
+        GetAllRuangRequest::class,
+        GetDetailRuangKelasRequest::class,
+        GetDetailRuangDosenRequest::class,
+        FilterRuangRequest::class,
+        SearchRuangRequest::class,
     ];
 
     public static function resolve(string $request)

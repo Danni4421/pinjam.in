@@ -7,12 +7,15 @@ class RuangKelas extends Ruang
 
     /**
      * @param string $kodeRuang
-     * @param string $namaRuang
-     * @param int $kapasitas
-     * @param int $lantai
-     * @param Jadwal[] $jadwal
+     * @param ?string $namaRuang
+     * @param ?int $kapasitas
+     * @param ?int $lantai
+     * @param ?string $fotoRuang
+     * @param ?Fasilitas[] $fasilitas
+     * @param ?Jadwal[] $jadwal
+     * @param bool $isRuangDosen
      */
-    public function __construct($kodeRuang, $namaRuang=null, $kapasitas=null, $lantai=null, $jadwal=[], $fotoRuang=null, $fasilitas=null)
+    public function __construct($kodeRuang, $namaRuang = null, $kapasitas = null, $lantai = null, $jadwal = [], $fotoRuang = null, $fasilitas = null, $isRuangDosen = false)
     {
         parent::__construct(
             kodeRuang: $kodeRuang,
@@ -20,12 +23,13 @@ class RuangKelas extends Ruang
             kapasitas: $kapasitas,
             lantai: $lantai,
             fotoRuang: $fotoRuang,
-            fasilitas: $fasilitas
+            fasilitas: $fasilitas,
+            isRuangDosen: $isRuangDosen
         );
 
         $this->jadwal = $jadwal;
     }
-    
+
     public function getJadwal()
     {
         return $this->jadwal;
@@ -34,7 +38,8 @@ class RuangKelas extends Ruang
     /**
      * @param Jadwal[] $jadwal
      */
-    public function setJadwal($jadwal){
+    public function setJadwal($jadwal)
+    {
         $this->jadwal = $jadwal;
     }
 
@@ -46,7 +51,7 @@ class RuangKelas extends Ruang
 
         if (!empty($jadwal)) {
             foreach ($jadwal as $jd) {
-                $jadwal[] = [
+                $jadwals[] = [
                     "jadwalId" => $jd->getJadwalId(),
                     "hari" => $jd->getHari(),
                     "mataKuliah" => [
@@ -65,8 +70,10 @@ class RuangKelas extends Ruang
             "namaRuang" => $this->getNamaRuang(),
             "kapasitas" => $this->getKapasitas(),
             "lantai" => $this->getLantai(),
+            "fotoRuang" => ImageManagerHelper::get(is_null($this->getFotoRuang()) ? "" : $this->getFotoRuang(), "ruang-kelas"),
             "fasilitas" => $this->getFasilitas(),
-            "jadwal" => $jadwal
+            "jadwal" => $jadwals,
+            "isRuangDosen" => $this->getIsRuangDosen()
         ];
     }
 }

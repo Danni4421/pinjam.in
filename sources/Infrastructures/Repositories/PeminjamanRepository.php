@@ -1,6 +1,6 @@
 <?php
 
-class PeminjamanService implements IPeminjamanService
+class PeminjamanRepository implements IPeminjamanRepository
 {
     private MySQL $database;
 
@@ -68,7 +68,7 @@ class PeminjamanService implements IPeminjamanService
         $list_peminjaman = [];
 
         while ($peminjaman = $result_peminjaman->fetch_assoc()) {
-            $ruangan = $this->getRuangByPeminjamanId(peminjaman_id: $peminjaman["peminjaman_id"]);
+            $ruangan = $this->getRuangByPeminjamanId(peminjamanId: $peminjaman["peminjaman_id"]);
 
             $list_peminjaman[] = new Peminjaman(
                 peminjamanId: $peminjaman["peminjaman_id"],
@@ -136,7 +136,7 @@ class PeminjamanService implements IPeminjamanService
         $list_peminjaman = [];
 
         while ($peminjaman = $result_peminjaman->fetch_assoc()) {
-            $ruangan = $this->getRuangByPeminjamanId(peminjaman_id: $peminjaman["peminjaman_id"]);
+            $ruangan = $this->getRuangByPeminjamanId(peminjamanId: $peminjaman["peminjaman_id"]);
 
             $list_peminjaman[] = new Peminjaman(
                 peminjamanId: $peminjaman["peminjaman_id"],
@@ -197,7 +197,7 @@ class PeminjamanService implements IPeminjamanService
         );
 
         $peminjaman = $this->database->result()->fetch_assoc();
-        $ruangan = $this->getRuangByPeminjamanId(peminjaman_id: $peminjaman["peminjaman_id"]);
+        $ruangan = $this->getRuangByPeminjamanId(peminjamanId: $peminjaman["peminjaman_id"]);
 
         return new Peminjaman(
             peminjamanId: $peminjaman["peminjaman_id"],
@@ -232,15 +232,15 @@ class PeminjamanService implements IPeminjamanService
     }
 
     /**
-     * @param int $peminjaman_id
+     * @param int $peminjamanId
      * @return array
      */
-    private function getRuangByPeminjamanId($peminjaman_id)
+    private function getRuangByPeminjamanId($peminjamanId)
     {
         $this->database->query(
             sql: "SELECT kode_ruang FROM detailpeminjaman WHERE peminjaman_id = ?",
             params: [
-                $peminjaman_id
+                $peminjamanId
             ]
         );
 
@@ -259,29 +259,29 @@ class PeminjamanService implements IPeminjamanService
                 WHERE id = ?",
             params: [
                 $peminjaman["status"],
-                $peminjaman["peminjaman_id"],
+                $peminjaman["peminjamanId"],
             ]
         );
     }
 
     /**
-     * @param int $peminjaman_id
+     * @param int $peminjamanId
      * @return bool
      */
-    public function delete($peminjaman_id)
+    public function delete($peminjamanId)
     {
         $this->database->query(
             sql: "DELETE FROM peminjaman
                 WHERE status = 'Selesai' AND id = ?",
             params: [
-                $peminjaman_id
+                $peminjamanId
             ]
         );
 
         $this->database->query(
             sql: "SELECT id FROM peminjaman WHERE id = ?",
             params: [
-                $peminjaman_id
+                $peminjamanId
             ]
         );
 

@@ -1,6 +1,6 @@
 <?php
 
-class RuangKelasService extends RuangService
+class RuangKelasRepository extends RuangRepository
 {
     public function __construct(MySQL $database)
     {
@@ -34,26 +34,25 @@ class RuangKelasService extends RuangService
         $ruangan = [];
 
         while ($row = $result->fetch_assoc()) {
-            $ruang_kelas = new RuangKelas(
+            $ruangan[] = new RuangKelas(
                 kodeRuang: $row["kode_ruang"],
                 namaRuang: $row["nama_ruang"],
                 kapasitas: $row["kapasitas"],
                 lantai: $row["lantai"],
                 fotoRuang: $row["foto_ruang"],
-                fasilitas: $row["fasilitas"]
+                fasilitas: $this->getFasilitas(kodeRuang: $row["kode_ruang"]),
+                jadwal: $this->getJadwal(kodeRuang: $row["kode_ruang"])
             );
-
-            $ruangan[] = $ruang_kelas;
         }
 
         return $ruangan;
     }
 
     /**
-     * @param string $kode_ruang
+     * @param string $kodeRuang
      * @return RuangKelas
      */
-    public function getById($kode_ruang)
+    public function getById($kodeRuang)
     {
         $this->database->query(
             sql: "SELECT
@@ -61,22 +60,70 @@ class RuangKelasService extends RuangService
             FROM ruang
             WHERE is_ruang_dosen = 0 AND kode_ruang = ?",
             params: [
-                $kode_ruang
+                $kodeRuang
             ]
         );
 
         $ruang_result = $this->database->result();
         $ruang = $ruang_result->fetch_assoc();
 
-        $ruang = new RuangKelas(
+        return new RuangKelas(
             kodeRuang: $ruang["kode_ruang"],
             namaRuang: $ruang["nama_ruang"],
             kapasitas: $ruang["kapasitas"],
             lantai: $ruang["lantai"],
             fotoRuang: $ruang["foto_ruang"],
-            fasilitas: $this->getFasilitas(kode_ruang: $kode_ruang)
+            fasilitas: $this->getFasilitas(kodeRuang: $ruang["kode_ruang"]),
+            jadwal: $this->getJadwal(kodeRuang: $ruang["kode_ruang"])
+        );
+    }
+
+    /**
+     * @param DateTime $tanggalKegiatan
+     * @param int $jkMulai
+     * @param int $jkSelesai
+     * @return array
+     */
+
+    # there is some miss logic here 
+    public function getAvailableRoom($tanggalKegiatan, $jkMulai, $jkSelesai)
+    {
+        $this->database->query(
+            sql: "SELECT kode_ruang FROM ruang WHERE is_ruang_dosen = 0
+            EXCEPT
+            (SELECT DISTINCT
+            kode_ruang
+            FROM jadwal
+            WHERE hari_id = DAYOFWEEK(?) AND is_ruang_dosen = 0
+            AND ((? BETWEEN jk_mulai AND jk_selesai) OR (? BETWEEN jk_mulai AND jk_selesai)) 
+            OR (? < jk_mulai AND ? >= jk_mulai))",
+            params: [
+                $tanggalKegiatan,
+                $jkMulai,
+                $jkSelesai,
+                $jkMulai,
+                $jkSelesai
+            ]
         );
 
+        $result = $this->database->result();
+        $ruangan = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $ruangan[] = new RuangKelas(
+                kodeRuang: $row["kode_ruang"]
+            );
+        }
+
+        return $ruangan;
+    }
+
+    /**
+     * @param RuangKelas $ruang
+     * @return array
+     */
+    public function getJadwal($kodeRuang)
+    {
         $this->database->query(
             sql: "SELECT j.id jadwal_id, mk.mk_id, mk.nama_mk, mk.sks, j.hari hari_id,
             jkm.jk_id jkm_id, jkm.jam_mulai jkm_mulai, jkm.jam_selesai jkm_selesai, 
@@ -87,14 +134,15 @@ class RuangKelasService extends RuangService
             JOIN jamkuliah jks ON jks.jk_id = j.jk_selesai 
             WHERE j.kode_ruang =  ?",
             params: [
-                $kode_ruang
+                $kodeRuang
             ]
         );
 
-        $jadwal_result = $this->database->result();
+        $jadwalResult = $this->database->result();
+
         $jadwal = [];
 
-        while ($row = $jadwal_result->fetch_assoc()) {
+        while ($row = $jadwalResult->fetch_assoc()) {
             $jadwal[] = new Jadwal(
                 jadwalId: $row["jadwal_id"],
                 mataKuliah: new MataKuliah(
@@ -116,76 +164,7 @@ class RuangKelasService extends RuangService
             );
         }
 
-        $ruang->setJadwal(jadwal: $jadwal);
-
-        return $ruang;
-    }
-
-    /**
-     * @param DateTime $tanggal_kegiatan
-     * @param int $jk_mulai
-     * @param int $jk_selesai
-     * @return array
-     */
-
-    # there is some miss logic here 
-    public function getAvailableRoom($tanggal_kegiatan, $jk_mulai, $jk_selesai)
-    {
-        $this->database->query(
-            sql: "SELECT kode_ruang FROM ruang WHERE is_ruang_dosen = 0
-            EXCEPT
-            (SELECT DISTINCT
-            kode_ruang
-            FROM jadwal
-            WHERE hari_id = DAYOFWEEK(?) AND is_ruang_dosen = 0
-            AND ((? BETWEEN jk_mulai AND jk_selesai) OR (? BETWEEN jk_mulai AND jk_selesai)) 
-            OR (? < jk_mulai AND ? >= jk_mulai))",
-            params: [
-                $tanggal_kegiatan,
-                $jk_mulai,
-                $jk_selesai,
-                $jk_mulai,
-                $jk_selesai
-            ]
-        );
-
-        $result = $this->database->result();
-        $ruangan = [];
-
-        while ($row = $result->fetch_assoc()) {
-            $ruang_kelas = new RuangKelas(
-                kodeRuang: $row["kode_ruang"]
-            );
-
-            $ruangan[] = $ruang_kelas;
-        }
-
-        return $ruangan;
-    }
-
-    /**
-     * @param RuangKelas $ruang
-     * @return array
-     */
-    public function getJadwal($kode_ruang)
-    {
-        $this->database->query(
-            sql: "SELECT j.id jadwal_id,
-                mk.mk_id, mk.nama_mk, 
-                jkm.jk_id jkm_id, jkm.jam_mulai jkm_mulai, jkm.jam_selesai jkm_selesai,
-                jks.jk_id jks_id, jks.jam_selesai jks_mulai, jks.jam_selesai jks_selesai
-            FROM jadwal j
-            LEFT OUTER JOIN matakuliah mk ON mk.mk_id = j.mk_id
-            LEFT OUTER JOIN jamkuliah jkm ON jkm.jk_id = j.jk_mulai
-            LEFT OUTER JOIN jamkuliah jks ON jks.jk_id = j.jk_selesai
-            LEFT OUTER JOIN ruang r ON r.kode_ruang = j.kode_ruang
-            WHERE r.kode_ruang = ?",
-            params: [
-                $kode_ruang
-            ]
-        );
-
-        return $this->database->result();
+        return $jadwal;
     }
 
     /**

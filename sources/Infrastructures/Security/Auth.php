@@ -15,38 +15,9 @@ class Auth
         }
     }
 
-    public static function verify_auth(): void
+    public static function verify_cookie(): bool
     {
-        static::verify_cookie();
-        if (isset($_SESSION["user"]["level"])) {
-            $level = $_SESSION["user"]["level"];
-            if (isset($_SERVER["PHP_SELF"])) {
-                $path = $_SERVER["PHP_SELF"];
-
-                $base_directory = explode('/', $path);
-
-                if ($level == "admin") {
-                    if (!in_array("admin", $base_directory)) {
-                        header('Location: /admin/index.php');
-                    }
-                } elseif ($level == "superadmin") {
-                    if (!in_array("superadmin", $base_directory)) {
-                        header('Location: /superadmin/index.php');
-                    }
-                } elseif ($level == "user") {
-                    if (array_intersect(["admin", "superadmin"], $base_directory)) {
-                        header('Location: /');
-                    }
-                }
-            }
-        }
-    }
-
-    private static function verify_cookie(): void
-    {
-        if (!isset($_COOKIE["user_id"])) {
-            header('Location: /signout.php');
-        }
+        return isset($_COOKIE["user_id"]);
     }
 
     public static function logout(): void
@@ -54,6 +25,6 @@ class Auth
         session_unset();
         session_destroy();
         setcookie("user_id", "", -3600, '/');
-        header('Location: /signin.php');
+        header('Location: /login');
     }
 }

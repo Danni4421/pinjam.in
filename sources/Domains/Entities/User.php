@@ -37,6 +37,12 @@ class User implements HasRole
 
     public function getUsername()
     {
+        $username = explode("-", $this->username);
+
+        if (count($username)) {
+            return end($username);
+        }
+
         return $this->username;
     }
 

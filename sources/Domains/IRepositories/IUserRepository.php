@@ -8,4 +8,16 @@ interface IUserRepository extends Repository
      * @return void
      */
     public function addDetails($user, $userDetails);
+
+    /**
+     * @param string $email
+     * @return bool
+     */
+    public function verifyAvailableEmail($email);
+
+    /**
+     * @param int $userId
+     * @return bool
+     */
+    public function verifyUserDetailsIsExists($userId);
 }

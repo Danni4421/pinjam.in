@@ -1,10 +1,10 @@
 <?php
 
-interface IPeminjamanService extends Repository
+interface IPeminjamanRepository extends Repository
 {
     /**
-     * @param string $user_id
+     * @param string $userId
      * @return array
      */
-    public function getByUser($user_id);
+    public function getByUser($userId);
 }

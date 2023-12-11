@@ -7,9 +7,9 @@ class MySQL extends Database
     {
         parent::__construct(
             hostname: "localhost",
-            username: "root",
-            password: "",
-            database: "pinjam.in"
+            username: "developer",
+            password: "01001111",
+            database: "pinjam_in"
         );
         $this->connect();
         $this->statement = null;
@@ -75,6 +75,8 @@ class MySQL extends Database
                         $result .= "d";
                         break;
                 }
+            } elseif (is_null($param)) {
+                $result .= "s";
             }
         }
         return $result;

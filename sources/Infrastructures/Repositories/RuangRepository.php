@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class RuangService implements IRuangService
+abstract class RuangRepository implements IRuangRepository
 {
     protected MySQL $database;
 
@@ -28,10 +28,49 @@ abstract class RuangService implements IRuangService
     }
 
     /**
-     * @param string $kode_ruang
+     * @return Ruang[]
+     */
+    public function get()
+    {
+        $this->database->query(
+            sql: "SELECT * FROM ruang",
+        );
+
+        $result = $this->database->result();
+        $ruangan = [];
+
+        while ($row = $result->fetch_assoc()) {
+            if ($row["is_ruang_dosen"]) {
+                $ruangan[] = new RuangDosen(
+                    kodeRuang: $row["kode_ruang"],
+                    namaRuang: $row["nama_ruang"],
+                    kapasitas: $row["kapasitas"],
+                    lantai: $row["lantai"],
+                    fotoRuang: $row["foto_ruang"],
+                    fasilitas: $this->getFasilitas(kodeRuang: $row["kode_ruang"]),
+                    dosen: []
+                );
+            } else {
+                $ruangan[] = new RuangKelas(
+                    kodeRuang: $row["kode_ruang"],
+                    namaRuang: $row["nama_ruang"],
+                    kapasitas: $row["kapasitas"],
+                    lantai: $row["lantai"],
+                    fotoRuang: $row["foto_ruang"],
+                    fasilitas: $this->getFasilitas(kodeRuang: $row["kode_ruang"]),
+                    jadwal: []
+                );
+            }
+        }
+
+        return $ruangan;
+    }
+
+    /**
+     * @param string $kodeRuang
      * @return array
      */
-    public function getFasilitas($kode_ruang)
+    public function getFasilitas($kodeRuang)
     {
         $this->database->query(
             sql: 'SELECT f.fasilitas_id, f.nama_fasilitas, df.status
@@ -40,7 +79,7 @@ abstract class RuangService implements IRuangService
             INNER JOIN fasilitas f ON f.fasilitas_id = df.fasilitas_id
             WHERE r.kode_ruang = ?',
             params: [
-                $kode_ruang
+                $kodeRuang
             ]
         );
 
@@ -58,16 +97,16 @@ abstract class RuangService implements IRuangService
         return $fasilitas;
     }
     /**
-     * @param string $nama_ruang
+     * @param string $namaRuang
      * @return array
      */
-    public function search($nama_ruang)
+    public function search($namaRuang)
     {
         $this->database->query(
             sql: "SELECT 
                 kode_ruang, nama_ruang, kapasitas, lantai, foto_ruang, is_ruang_dosen
             FROM ruang
-            WHERE nama_ruang LIKE '%$nama_ruang%'"
+            WHERE nama_ruang LIKE '%$namaRuang%'"
         );
 
         $result = $this->database->result();
@@ -120,15 +159,15 @@ abstract class RuangService implements IRuangService
     }
 
     /**
-     * @param Ruang $ruang
+     * @param string $kodeRuang
      * @return void
      */
-    public function delete($ruang)
+    public function delete($kodeRuang)
     {
         $this->database->query(
             sql: 'DELETE FROM ruang WHERE kode_ruang = ?',
             params: [
-                $ruang->getKodeRuang(),
+                $kodeRuang,
             ]
         );
     }

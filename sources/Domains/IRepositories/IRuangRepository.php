@@ -1,16 +1,16 @@
 <?php
 
-interface IRuangService extends Repository
+interface IRuangRepository extends Repository
 {
     /**
-     * @param string $kode_ruang
+     * @param string $kodeRuang
      * @return array
      */
-    public function getFasilitas($kode_ruang);
+    public function getFasilitas($kodeRuang);
 
     /**
-     * @param string $nama_ruang
+     * @param string $namaRuang
      * @return Ruang
      */
-    public function search($nama_ruang);
+    public function search($namaRuang);
 }

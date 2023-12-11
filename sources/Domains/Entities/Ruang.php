@@ -10,14 +10,18 @@ abstract class Ruang implements HasRequest
     /** @var ?Fasilitas[] */
     protected $fasilitas;
     protected ?string $fotoRuang;
+    private bool $isRuangDosen;
 
     /**
      * @param ?string $kodeRuang
      * @param ?string $namaRuang
      * @param ?int $kapasitas
      * @param ?int $lantai
+     * @param ?string $fotoRuang
+     * @param ?Fasilitas[] $fasilitas 
+     * @param bool $isRuangDosen
      */
-    public function __construct($kodeRuang, $namaRuang=null, $kapasitas=null, $lantai=null, $fotoRuang=null, $fasilitas=null)
+    public function __construct($kodeRuang, $namaRuang = null, $kapasitas = null, $lantai = null, $fotoRuang = null, $fasilitas = null, $isRuangDosen = false)
     {
         $this->kodeRuang = $kodeRuang;
         $this->namaRuang = $namaRuang;
@@ -25,6 +29,7 @@ abstract class Ruang implements HasRequest
         $this->lantai = $lantai;
         $this->fotoRuang = $fotoRuang;
         $this->fasilitas = $fasilitas;
+        $this->isRuangDosen = $isRuangDosen;
     }
 
     public function getKodeRuang()
@@ -66,6 +71,11 @@ abstract class Ruang implements HasRequest
             }
         }
 
-        return $fasilities;;
+        return $fasilities;
+    }
+
+    public function getIsRuangDosen()
+    {
+        return $this->isRuangDosen;
     }
 }

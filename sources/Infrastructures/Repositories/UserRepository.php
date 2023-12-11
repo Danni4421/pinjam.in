@@ -80,7 +80,7 @@ class UserRepository implements IUserRepository
                     namaLengkap: $row["nama_lengkap"],
                     alamat: $row["alamat"],
                     noTelp: $row["no_telp"],
-                    fotoProfil: $row["fotoProfil"]
+                    fotoProfil: $row["foto_profil"]
                 )
             );
         }
@@ -178,5 +178,21 @@ class UserRepository implements IUserRepository
         );
 
         return $this->database->result()->num_rows <= 0;
+    }
+
+    /**
+     * @param int $userId
+     * @return bool
+     */
+    public function verifyUserDetailsIsExists($userId)
+    {
+        $this->database->query(
+            sql: "SELECT user_id FROM userdetails WHERE user_id = ?",
+            params: [
+                $userId
+            ]
+        );
+
+        return $this->database->result()->num_rows > 0;
     }
 }
