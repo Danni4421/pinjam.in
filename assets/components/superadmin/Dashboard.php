@@ -56,6 +56,8 @@
                                                 <th>Jumlah Kapasitas</th>
                                             </tr>
                                         </thead>
+                                        <tbody id="list-ruang-kelas">
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -81,20 +83,15 @@
                                                 <th>Jumlah Dosen</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <th>2</th>
-                                            </tr>
+                                        <tbody id="list-ruang-dosen">
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div><!-- /.card-body -->
+                </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-    <!-- /.content -->
 </div>

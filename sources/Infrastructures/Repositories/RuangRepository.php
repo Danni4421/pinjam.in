@@ -73,7 +73,7 @@ abstract class RuangRepository implements IRuangRepository
     public function getFasilitas($kodeRuang)
     {
         $this->database->query(
-            sql: 'SELECT f.fasilitas_id, f.nama_fasilitas, df.status
+            sql: 'SELECT f.fasilitas_id, f.nama_fasilitas, f.icon, df.status
             FROM detailfasilitas df 
             INNER JOIN ruang r ON r.kode_ruang = df.kode_ruang
             INNER JOIN fasilitas f ON f.fasilitas_id = df.fasilitas_id
@@ -90,12 +90,14 @@ abstract class RuangRepository implements IRuangRepository
             $fasilitas[] = new Fasilitas(
                 fasilitasId: $row["fasilitas_id"],
                 namaFasilitas: $row["nama_fasilitas"],
+                icon: $row["icon"],
                 status: $row["status"]
             );
         }
 
         return $fasilitas;
     }
+
     /**
      * @param string $namaRuang
      * @return array
@@ -170,5 +172,24 @@ abstract class RuangRepository implements IRuangRepository
                 $kodeRuang,
             ]
         );
+    }
+
+    public function verifyIsRuangAvailable($kodeRuang, $tanggalKegiatan, $jamMulai, $jamSelesai)
+    {
+        $this->database->query(
+            sql: "SELECT VerifyAvailableRoom(?, ?, ?, ?) as queryResult",
+            params: [
+                $kodeRuang,
+                $tanggalKegiatan,
+                $jamMulai,
+                $jamSelesai
+            ]
+        );
+
+        $result = $this->database->result()->fetch_assoc();
+
+        if (is_null($result["queryResult"])) {
+            return true;
+        }
     }
 }

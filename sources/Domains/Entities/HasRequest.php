@@ -5,5 +5,5 @@ interface HasRequest
     /**
      * @return array
      */
-    public function toJSON();
+    public function toArray();
 }

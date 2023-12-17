@@ -97,7 +97,7 @@ class UserRepository implements IUserRepository
         $this->database->query(
             sql: "SELECT 
             u.id user_id, u.username, u.email, u.level, 
-            ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
+            ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil, ud.kode_ruang
             FROM users u 
             LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id
             WHERE u.id = ?",
@@ -118,6 +118,7 @@ class UserRepository implements IUserRepository
                 alamat: $row["alamat"],
                 noTelp: $row["no_telp"],
                 fotoProfil: $row["foto_profil"],
+                kodeRuang: $row["kode_ruang"]
             )
         );
     }
@@ -129,22 +130,23 @@ class UserRepository implements IUserRepository
     public function update($user)
     {
         $userDetails = $user->getUserDetails();
-        $query = "UPDATE userdetails SET
-        nomor_induk = ?,
-        nama_lengkap = ?,
-        alamat = ?,
-        no_telp = ?,
-        foto_profil = ?
-        WHERE user_id = ?";
 
         $this->database->query(
-            sql: $query,
+            sql: "UPDATE userdetails SET
+                nomor_induk = ?,
+                nama_lengkap = ?,
+                alamat = ?,
+                no_telp = ?,
+                foto_profil = ?,
+                kode_ruang = ?
+                WHERE user_id = ?",
             params: [
                 $userDetails->getNomorInduk(),
                 $userDetails->getNamaLengkap(),
                 $userDetails->getAlamat(),
                 $userDetails->getNoTelp(),
                 $userDetails->getFotoProfil(),
+                $userDetails->getKodeRuang(),
                 $user->getId(),
             ]
         );

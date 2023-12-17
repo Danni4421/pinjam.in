@@ -66,6 +66,7 @@ abstract class Ruang implements HasRequest
                 $fasilities[] = [
                     "fasilitasId" => $fasilitas->getFasilitasId(),
                     "namaFasilitas" => $fasilitas->getNamaFasilitas(),
+                    "icon" => $fasilitas->getIcon(),
                     "status" => $fasilitas->getStatus(),
                 ];
             }

@@ -8,6 +8,21 @@ class RuangDosenRepository extends RuangRepository
     }
 
     /**
+     * @param Dosen $dosen
+     * @return void
+     */
+    public function addDosen($dosen)
+    {
+        $this->database->query(
+            sql: "UPDATE userdetails SET kode_ruang = ? WHERE user_id = ?",
+            params: [
+                $dosen->getRuang()->getKodeRuang(),
+                $dosen->getId()
+            ]
+        );
+    }
+
+    /**
      * @return array
      */
     public function get()
@@ -70,7 +85,7 @@ class RuangDosenRepository extends RuangRepository
     {
         $this->database->query(
             sql: "SELECT u.id user_id, u.username, u.email, u.level,
-            ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil 
+            ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
             FROM users u 
             LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id 
             LEFT OUTER JOIN ruang r ON r.kode_ruang = ud.kode_ruang 
@@ -95,7 +110,8 @@ class RuangDosenRepository extends RuangRepository
                     alamat: $row["alamat"],
                     noTelp: $row["no_telp"],
                     fotoProfil: $row["foto_profil"],
-                )
+                    kodeRuang: $kodeRuang
+                ),
             );
         }
 

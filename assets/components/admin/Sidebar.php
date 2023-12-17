@@ -41,7 +41,9 @@
                 <li class="nav-item" id="logoutButton">
                     <button class="nav-link btn btn-block btn-outline-secondary" style="background-color: transparent;">
                         <span class="logout-icon hide"><i class="nav-icon fas fa-sign-out-alt"></i></span>
-                        <span class="logout-text">Keluar</span>
+                        <a href="/logout">
+                            <span class="logout-text">Logout</span>
+                        </a>
                     </button>
                 </li>
             </ul>

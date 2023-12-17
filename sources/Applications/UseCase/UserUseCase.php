@@ -14,6 +14,7 @@ class UserUseCase
 
     /**
      * @param array $payload
+     * @return array
      */
     public function register($payload)
     {
@@ -33,6 +34,7 @@ class UserUseCase
                 role: 'user'
             ));
 
+
             if ($this->userRepository instanceof DosenRepository) {
                 $this->userRepository->addDetails(
                     userId: $userId,
@@ -41,14 +43,22 @@ class UserUseCase
                         namaLengkap: $payload["nama_lengkap"],
                         alamat: $payload["alamat"],
                         noTelp: $payload["no_telp"],
-                        fotoProfil: $payload["fotoProfil"],
-                        kodeRuang: $payload["kodeRuang"],
+                        fotoProfil: $payload["foto_profil"],
+                        kodeRuang: $payload["kode_ruang"],
                         isDosen: 1,
                     ),
                 );
             }
 
-            header("Location: /login");
+            return [
+                "status" => "success",
+                "message" => "Berhasil menambahkan user."
+            ];
+        } else {
+            return [
+                "status" => "fail",
+                "message" => "Email telah digunakan."
+            ];
         }
     }
 
@@ -88,7 +98,7 @@ class UserUseCase
         return $this->userRepository->getById($payload["user_id"]);
     }
 
-    private function imageProfileProcess($oldPhoto, $payload)
+    public function imageProfileProcess($oldPhoto, $payload)
     {
         if (!empty($payload["foto_profil"]["full_path"])) {
             $piece_ext = explode(".", $payload["foto_profil"]["name"]);
@@ -111,14 +121,13 @@ class UserUseCase
     public function updateUser($userId, $payload)
     {
         $data = Input::anti_injection($payload["data"]);
-        $imagePath = $this->imageProfileProcess($data["old_foto_profil"], $payload["files"]);
 
         foreach ($data as $key => $value) {
-            $data[$key] = $value == "-" ? NULL : $value;
+            $data[$key] = $value == "-" || empty($value) || is_null($value) ? null : $value;
         }
 
         if (!$this->userRepository->verifyUserDetailsIsExists($userId)) {
-            $this->addUserDetail($userId, [...$data, "foto_profil" => $imagePath]);
+            $this->addUserDetail($userId, $data);
         } else {
             $this->userRepository->update(
                 user: new User(
@@ -128,8 +137,8 @@ class UserUseCase
                         namaLengkap: $data["nama_lengkap"],
                         alamat: $data["alamat"],
                         noTelp: $data["no_telp"],
-                        fotoProfil: $imagePath,
-                        kodeRuang: $this->userRepository instanceof DosenRepository ? $payload["kode_ruang"] : NULL
+                        fotoProfil: $data["foto_profil"],
+                        kodeRuang: $data["kode_ruang"]
                     ),
                 ),
             );
@@ -137,6 +146,10 @@ class UserUseCase
         }
     }
 
+    /**
+     * @param int $userId
+     * @return void
+     */
     public function deleteUser($userId)
     {
         $this->userRepository->delete($userId);

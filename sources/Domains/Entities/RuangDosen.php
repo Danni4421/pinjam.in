@@ -36,28 +36,14 @@ class RuangDosen extends Ruang
         return $this->dosen;
     }
 
-    public function toJSON()
+    public function toArray()
     {
         $lectures = [];
         $lecture = $this->getDosen();
 
         if (!empty($lecture)) {
             foreach ($lecture as $lc) {
-                $lectures[] = [
-                    "id" => $lc->getId(),
-                    "username" => $lc->getUsername(),
-                    "email" => $lc->getEmail(),
-                    "role" => $lc->getRole(),
-                    "nip" => $lc->getUserDetails()->getNomorInduk(),
-                    "namaLengkap" => $lc->getUserDetails()->getNamaLengkap(),
-                    "alamat" => $lc->getUserDetails()->getAlamat(),
-                    "noTelp" => $lc->getUserDetails()->getNoTelp(),
-                    "fotoProfil" => ImageManagerHelper::get(
-                        is_null($lc->getUserDetails()->getFotoProfil()) ? "" : 
-                        $lc->getUserDetails()->getFotoProfil(),
-                        "profile" 
-                    ),
-                ];
+                $lectures[] = $lc->toArray();
             }
         }
 

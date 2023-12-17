@@ -60,31 +60,7 @@
                                                 <th>Jumlah Kapasitas</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>RT01</td>
-                                                <td>30</td>
-                                            </tr>
-                                            <tr>
-                                                <td>RT02</td>
-                                                <td>30</td>
-                                            </tr>
-                                            <tr>
-                                                <td>RT03</td>
-                                                <td>30</td>
-                                            </tr>
-                                            <tr>
-                                                <td>RT04</td>
-                                                <td>30</td>
-                                            </tr>
-                                            <tr>
-                                                <td>RT05</td>
-                                                <td>30</td>
-                                            </tr>
-                                            <tr>
-                                                <td>RT06</td>
-                                                <td>30</td>
-                                            </tr>
+                                        <tbody id="list-ruang-kelas">
                                         </tbody>
                                     </table>
                                 </div>

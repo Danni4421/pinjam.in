@@ -1,0 +1,54 @@
+/* Style card */
+.facility-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* gap: 2%; */
+}
+
+.facility-card {
+  display: flex;
+  background-color: #aecff2;
+  padding: 8px;
+  border-radius: 4px;
+  width: 90%;
+  margin: 2%;
+}
+
+.facility-card i {
+  color: #212529;
+  margin-right: 2%;
+}
+
+.facility-card span {
+  color: #495057;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+.facility-card.small {
+  font-size: 0.8rem;
+}
+
+.img-size {
+  min-width: 100% !important;
+  min-height: 45% !important;
+}
+
+/* Style Foto Dosen */
+.foto-bulat {
+  width: 80px;
+  height: 80px;
+  background-image: url('gambar-anda.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
+
+/* Hover */
+#ruangTeori:hover {
+  background-color: lightblue;
+  cursor: pointer; /* Ubah kursor saat di hover menjadi pointer */
+}

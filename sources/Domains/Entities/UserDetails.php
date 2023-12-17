@@ -64,7 +64,7 @@ class UserDetails
 
     public function getFotoProfil()
     {
-    return $this->fotoProfil;
+        return $this->fotoProfil;
     }
 
     public function verifyIsDosen()

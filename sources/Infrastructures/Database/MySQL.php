@@ -49,8 +49,8 @@ class MySQL extends Database
 
             $this->statement->execute();
         } catch (Exception $e) {
-            var_dump($e->getMessage());
-            throw new Exception('Terjadi Masalah pada Server.');
+            var_dump("Message : " . $e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 

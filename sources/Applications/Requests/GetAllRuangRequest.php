@@ -15,11 +15,11 @@ class GetAllRuangRequest extends Request
         $list_ruang = [];
 
         foreach ($ruangKelas as $ruang) {
-            $list_ruang[] = $ruang->toJSON();
+            $list_ruang[] = $ruang->toArray();
         }
 
         foreach ($ruangDosen as $ruang) {
-            $list_ruang[] = $ruang->toJSON();
+            $list_ruang[] = $ruang->toArray();
         }
 
         return [

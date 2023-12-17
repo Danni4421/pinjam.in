@@ -8,17 +8,33 @@ $container = [
     'Applications' => [
         # Request 
         'Requests' => [
-            'Request',
-            'RequestContainer'
+            Request::class,
+            RequestContainer::class,
+            AddDosenRequest::class,
+            AddPeminjamanRequest::class,
+            AuthenticationRequest::class,
+            GetAllRuangRequest::class,
+            GetDetailDosenRequest::class,
+            UserRequest::class,
+            RuangRequest::class,
+            MataKuliahRequest::class,
+            JamKuliahRequest::class,
+            PeminjamanRequest::class,
+            FasilitasRequest::class,
+            SearchRuangRequest::class,
+            UserUpdateFormRequest::class,
         ],
 
         # UseCase
         'UseCase' => [
-            # Interfaces
-            'UseCase',
-
             # Use Cases
-            'RegisterUseCase'
+            AuthenticationUseCase::class,
+            UserUseCase::class,
+            RuangUseCase::class,
+            PeminjamanUseCase::class,
+            MataKuliahUseCase::class,
+            FasilitasUseCase::class,
+            JamKuliahUseCase::class,
         ],
     ],
 
@@ -29,28 +45,28 @@ $container = [
     'Domains' => [
         # Entities
         'Entities' => [
-            'HasRequest',
-            'HasRole',
-            'UserDetails',
-            'User',
-            'Dosen',
-            'Peminjam',
-            'Fasilitas',
-            'JamKuliah',
-            'MataKuliah',
-            'Jadwal',
-            'Ruang',
-            'RuangKelas',
-            'RuangDosen',
-            'Peminjaman'
+            HasRequest::class,
+            HasRole::class,
+            UserDetails::class,
+            User::class,
+            Dosen::class,
+            Peminjam::class,
+            Fasilitas::class,
+            JamKuliah::class,
+            MataKuliah::class,
+            Jadwal::class,
+            Ruang::class,
+            RuangKelas::class,
+            RuangDosen::class,
+            Peminjaman::class
         ],
 
         # Repository Interfaces
         'IRepositories' => [
-            'Repository',
-            'IUserRepository',
-            'IPeminjamanRepository',
-            'IRuangRepository'
+            Repository::class,
+            IUserRepository::class,
+            IPeminjamanRepository::class,
+            IRuangRepository::class
         ]
     ],
 
@@ -59,8 +75,8 @@ $container = [
      * 
      */
     'Helpers' => [
-        'ImageManagerHelper',
-        'MessageHelper'
+        ImageManagerHelper::class,
+        MessageHelper::class
     ],
 
     /**
@@ -70,26 +86,29 @@ $container = [
     'Infrastructures' => [
         # Database
         'Database' => [
-            'Database',
-            'MySQL'
+            Database::class,
+            MySQL::class
         ],
 
         # Repositories
         'Repositories' => [
-            'AuthenticationRepository',
-            'UserRepository',
-            'DosenRepository',
-            'RuangRepository',
-            'RuangKelasRepository',
-            'RuangDosenRepository',
-            'PeminjamanRepository'
+            AuthenticationRepository::class,
+            UserRepository::class,
+            DosenRepository::class,
+            RuangRepository::class,
+            RuangKelasRepository::class,
+            RuangDosenRepository::class,
+            PeminjamanRepository::class,
+            MataKuliahRepository::class,
+            FasilitasRepository::class,
+            JamKuliahRepository::class,
         ],
 
         # Security
         'Security' => [
-            'Auth',
-            'Input',
-            'Password'
+            Auth::class,
+            Input::class,
+            Password::class
         ]
     ],
 
@@ -100,8 +119,8 @@ $container = [
     'Interfaces' => [
         # Routes
         'Routes' => [
-            'Route',
-            'Router',
+            Route::class,
+            Router::class,
             'web'
         ]
     ]
@@ -119,9 +138,9 @@ function init($container, $prefix = '')
 
     foreach ($container as $key => $value) {
         if (!is_array($value)) {
-            require_once __DIR__ . "\\sources\\" . $prefix . $value . '.php';
+            require_once __DIR__ . "/sources//" . $prefix . $value . '.php';
         } else {
-            $prefix .= $key . "\\";
+            $prefix .= $key . "/";
             init($value, $prefix);
 
             if (!is_array(next($container))) {

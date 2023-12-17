@@ -79,30 +79,17 @@ class RuangKelasRepository extends RuangRepository
     }
 
     /**
-     * @param DateTime $tanggalKegiatan
-     * @param int $jkMulai
-     * @param int $jkSelesai
-     * @return array
+     * Get Ruang By Capacity
+     *
+     * @param int $amount
+     * @return RuangKelas[]
      */
-
-    # there is some miss logic here 
-    public function getAvailableRoom($tanggalKegiatan, $jkMulai, $jkSelesai)
+    public function getRuangTeoriByCapacity($amount)
     {
         $this->database->query(
-            sql: "SELECT kode_ruang FROM ruang WHERE is_ruang_dosen = 0
-            EXCEPT
-            (SELECT DISTINCT
-            kode_ruang
-            FROM jadwal
-            WHERE hari_id = DAYOFWEEK(?) AND is_ruang_dosen = 0
-            AND ((? BETWEEN jk_mulai AND jk_selesai) OR (? BETWEEN jk_mulai AND jk_selesai)) 
-            OR (? < jk_mulai AND ? >= jk_mulai))",
+            sql: "SELECT * FROM ruang WHERE is_ruang_dosen = 0 AND tipe = 'RT' AND kapasitas = ?",
             params: [
-                $tanggalKegiatan,
-                $jkMulai,
-                $jkSelesai,
-                $jkMulai,
-                $jkSelesai
+                $amount
             ]
         );
 
@@ -111,7 +98,13 @@ class RuangKelasRepository extends RuangRepository
 
         while ($row = $result->fetch_assoc()) {
             $ruangan[] = new RuangKelas(
-                kodeRuang: $row["kode_ruang"]
+                kodeRuang: $row["kode_ruang"],
+                namaRuang: $row["nama_ruang"],
+                kapasitas: $row["kapasitas"],
+                lantai: $row["lantai"],
+                fotoRuang: $row["foto_ruang"],
+                fasilitas: $this->getFasilitas(kodeRuang: $row["kode_ruang"]),
+                jadwal: $this->getJadwal(kodeRuang: $row["kode_ruang"])
             );
         }
 

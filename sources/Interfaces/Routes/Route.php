@@ -53,10 +53,10 @@ class Route
         return false;
     }
 
-    public function resolve()
+    public function resolve($query = null, $relativePath = '')
     {
         $routeView = explode(".", $this->view);
-        $targetView = ucfirst(end($routeView)) . ".php";
+        $targetView = end($routeView) . ".view.php";
         $targetDirectory = implode("/", array_slice($routeView, 0, -1));
 
         require_once 'assets/views/' . $targetDirectory . '/' . $targetView;

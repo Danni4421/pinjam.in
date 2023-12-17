@@ -9,7 +9,12 @@ class Input
         $result = [];
         static::initialize();
         foreach ($payload as $key => $value) {
-            $result[$key] = static::$database->verifyInput($value);
+            if (is_array($value)) {
+                $result[$key] = static::anti_injection($value);
+            } else {
+                $result[$key] = static::$database->verifyInput($value);
+            }
+            
         }
 
         return $result;

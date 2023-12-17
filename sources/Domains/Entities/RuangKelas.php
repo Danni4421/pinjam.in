@@ -43,7 +43,7 @@ class RuangKelas extends Ruang
         $this->jadwal = $jadwal;
     }
 
-    public function toJSON()
+    public function toArray()
     {
         $jadwals = [];
         $jadwal = $this->getJadwal();

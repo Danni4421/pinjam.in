@@ -7,4 +7,10 @@ interface IPeminjamanRepository extends Repository
      * @return array
      */
     public function getByUser($userId);
+
+    /**
+     * @param string $status
+     * @return array
+     */
+    public function getPeminjamanByStatus($status);
 }

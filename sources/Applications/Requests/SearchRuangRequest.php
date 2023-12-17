@@ -11,13 +11,13 @@ class SearchRuangRequest extends Request
         }
 
         $ruangRepository = new RuangKelasRepository(new MySQL());
-        $ruangUseCase = new RuangUseCase($ruangRepository);
+        $ruangUseCase = new RuangUseCase(ruangRepository: $ruangRepository);
 
         $ruangan = $ruangUseCase->searchRuang($payload["search_input"]);
         $list_ruang = [];
 
         foreach ($ruangan as $ruang) {
-            $list_ruang[] = $ruang->toJSON();
+            $list_ruang[] = $ruang->toArray();
         }
 
         return [

@@ -4,11 +4,19 @@ class RequestContainer
 {
     private static array $requests = [
         # Requests
+        AddDosenRequest::class,
+        AddPeminjamanRequest::class,
+        AuthenticationRequest::class,
         GetAllRuangRequest::class,
-        GetDetailRuangKelasRequest::class,
-        GetDetailRuangDosenRequest::class,
-        FilterRuangRequest::class,
+        GetDetailDosenRequest::class,
+        UserRequest::class,
+        RuangRequest::class,
+        PeminjamanRequest::class,
+        MataKuliahRequest::class,
+        JamKuliahRequest::class,
+        FasilitasRequest::class,
         SearchRuangRequest::class,
+        UserUpdateFormRequest::class,
     ];
 
     public static function resolve(string $request)

@@ -34,19 +34,21 @@ class AuthenticationUseCase
                     "level" => $user->getRole()
                 ]);
 
-                switch ($user->getRole()) {
-                    case "user":
-                        header("Location: /");
-                        break;
-                    case "admin" || "superadmin":
-                        header("Location: /admin");
-                        break;
-                }
+                return [
+                    "status" => "success",
+                    "data" => $user->getRole(),
+                ];
             } else {
-                MessageHelper::message("Gagal", "danger", "Password Anda Tidak Valid!");
+                return [
+                    "status" => "fail",
+                    "message" => "Password tidak valid."
+                ];
             }
         } else {
-            MessageHelper::message("Gagal", "danger", "Email Anda Tidak Terdaftar!");
+            return [
+                "status" => "fail",
+                "message" => "Email tidak terdaftar."
+            ];
         }
     }
 }

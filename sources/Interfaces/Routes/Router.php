@@ -4,7 +4,7 @@ class Router
 {
     private static array $routes = [];
 
-    public static function route($url)
+    public static function route($url, $query, $relativePath)
     {
         if ($url == "/logout") {
             Auth::logout();
@@ -12,7 +12,7 @@ class Router
 
         foreach (static::$routes as $route) {
             if ($route->match($url)) {
-                $route->resolve();
+                $route->resolve($query, $relativePath);
                 return;
             }
         }

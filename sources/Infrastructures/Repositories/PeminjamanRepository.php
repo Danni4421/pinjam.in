@@ -18,16 +18,28 @@ class PeminjamanRepository implements IPeminjamanRepository
         $peminjam = $peminjaman->getPeminjam();
 
         $this->database->query(
-            sql: "INSERT INTO peminjaman (tanggal_kegiatan, keterangan, asal_instansi, status, user_id, kode_ruang, jk_mulai, jk_selesai, logo_instansi) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            sql: "INSERT INTO peminjaman (
+                tanggal_peminjaman, 
+                tanggal_kegiatan_mulai, 
+                tanggal_kegiatan_selesai, 
+                keterangan, 
+                asal_instansi, 
+                status, 
+                user_id, 
+                jam_mulai, 
+                jam_selesai, 
+                logo_instansi) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             params: [
-                $peminjaman->getTanggalKegiatan(),
+                $peminjaman->getTanggalPeminjaman()->format("Y-m-d"),
+                $peminjaman->getTanggalKegiatanMulai()->format("Y-m-d"),
+                $peminjaman->getTanggalKegiatanSelesai()->format("Y-m-d"),
                 $peminjaman->getKeterangan(),
                 $peminjam->getInstansi(),
                 $peminjaman->getStatus(),
                 $peminjam->getId(),
-                $peminjaman->getJamMulai()->getJkId(),
-                $peminjaman->getJamSelesai()->getJkId(),
+                $peminjaman->getJamMulai()->format('H:i:s'),
+                $peminjaman->getJamSelesai()->format('H:i:s'),
                 $peminjam->getLogoInstansi(),
             ]
         );
@@ -53,15 +65,69 @@ class PeminjamanRepository implements IPeminjamanRepository
     {
         $this->database->query(
             sql: "SELECT
-            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan, p.keterangan, p.status, 
-            jkm.jk_id jkm_id, jkm.jam_mulai jkm_mulai, jkm.jam_selesai jkm_selesai, 
-            jks.jk_id jks_id, jks.jam_mulai jks_mulai, jks.jam_selesai jks_selesai,
+            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan_mulai, p.tanggal_kegiatan_selesai, 
+            p.keterangan, p.status, p.asal_instansi, p.logo_instansi, p.jam_mulai, p.jam_selesai,
             u.id user_id, u.username, u.email, ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
             FROM peminjaman p
             LEFT OUTER JOIN users u ON u.id = p.user_id
             LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id
-            LEFT OUTER JOIN jamkuliah jkm ON jkm.jk_id = p.jk_mulai
-            LEFT OUTER JOIN jamkuliah jks ON jks.jk_id = p.jk_selesai"
+            ORDER BY p.tanggal_peminjaman DESC"
+        );
+
+        $result_peminjaman = $this->database->result();
+        $list_peminjaman = [];
+
+        while ($peminjaman = $result_peminjaman->fetch_assoc()) {
+            $ruangan = $this->getRuangByPeminjamanId(peminjamanId: $peminjaman["peminjaman_id"]);
+
+            $list_peminjaman[] = new Peminjaman(
+                peminjamanId: $peminjaman["peminjaman_id"],
+                peminjam: new Peminjam(
+                    id: $peminjaman["user_id"],
+                    username: $peminjaman["username"],
+                    email: $peminjaman["email"],
+                    userDetails: new UserDetails(
+                        nomorInduk: $peminjaman["nomor_induk"],
+                        namaLengkap: $peminjaman["nama_lengkap"],
+                        alamat: $peminjaman["alamat"],
+                        noTelp: $peminjaman["no_telp"],
+                        fotoProfil: $peminjaman["foto_profil"],
+                    ),
+                    instansi: $peminjaman["asal_instansi"],
+                    logoInstansi: $peminjaman["logo_instansi"],
+                ),
+                ruang: $ruangan,
+                tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
+                tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
+                tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
+                jamMulai: new DateTime($peminjaman["jam_mulai"]),
+                jamSelesai: new DateTime($peminjaman["jam_selesai"]),
+                keterangan: $peminjaman["keterangan"],
+                status: $peminjaman["status"]
+            );
+        }
+
+        return $list_peminjaman;
+    }
+
+    /**
+     * @param string $status
+     * @return array
+     */
+    public function getPeminjamanByStatus($status)
+    {
+        $this->database->query(
+            sql: "SELECT
+            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan_mulai, p.tanggal_kegiatan_selesai, 
+            p.keterangan, p.status, p.jam_mulai, p.jam_selesai,
+            u.id user_id, u.username, u.email, ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
+            FROM peminjaman p
+            LEFT OUTER JOIN users u ON u.id = p.user_id
+            LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id
+            WHERE p.status = ?",
+            params: [
+                $status
+            ]
         );
 
         $result_peminjaman = $this->database->result();
@@ -90,17 +156,10 @@ class PeminjamanRepository implements IPeminjamanRepository
                 ),
                 ruang: $ruangan,
                 tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
-                tanggalKegiatan: new DateTime($peminjaman["tanggal_kegiatan"]),
-                jamMulai: new JamKuliah(
-                    jkId: $peminjaman["jkm_id"],
-                    jamMulai: $peminjaman["jkm_mulai"],
-                    jamSelesai: $peminjaman["jkm_selesai"],
-                ),
-                jamSelesai: new JamKuliah(
-                    jkId: $peminjaman["jks_id"],
-                    jamMulai: $peminjaman["jks_mulai"],
-                    jamSelesai: $peminjaman["jks_selesai"]
-                ),
+                tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
+                tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
+                jamMulai: new DateTime($peminjaman["jam_mulai"]),
+                jamSelesai: new DateTime($peminjaman["jam_selesai"]),
                 keterangan: $peminjaman["keterangan"],
                 status: $peminjaman["status"]
             );
@@ -117,15 +176,12 @@ class PeminjamanRepository implements IPeminjamanRepository
     {
         $this->database->query(
             sql: "SELECT
-            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan, p.keterangan, p.status, 
-            jkm.jk_id jkm_id, jkm.jam_mulai jkm_mulai, jkm.jam_selesai jkm_selesai, 
-            jks.jk_id jks_id, jks.jam_mulai jks_mulai, jks.jam_selesai jks_selesai,
-            u.id user_id, u.username, u.email, ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
+            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan_mulai, p.tanggal_kegiatan_selesai, 
+            p.keterangan, p.status, p.jam_mulai, p.jam_selesai, u.id user_id, u.username, u.email, 
+            ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
             FROM peminjaman p
             LEFT OUTER JOIN users u ON u.id = p.user_id
             LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id
-            LEFT OUTER JOIN jamkuliah jkm ON jkm.jk_id = p.jk_mulai
-            LEFT OUTER JOIN jamkuliah jks ON jks.jk_id = p.jk_selesai
             WHERE p.user_id = ?",
             params: [
                 $user_id
@@ -154,17 +210,10 @@ class PeminjamanRepository implements IPeminjamanRepository
                 ),
                 ruang: $ruangan,
                 tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
-                tanggalKegiatan: new DateTime($peminjaman["tanggal_kegiatan"]),
-                jamMulai: new JamKuliah(
-                    jkId: $peminjaman["jkm_id"],
-                    jamMulai: $peminjaman["jkm_mulai"],
-                    jamSelesai: $peminjaman["jkm_selesai"],
-                ),
-                jamSelesai: new JamKuliah(
-                    jkId: $peminjaman["jks_id"],
-                    jamMulai: $peminjaman["jks_mulai"],
-                    jamSelesai: $peminjaman["jks_selesai"]
-                ),
+                tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
+                tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
+                jamMulai: new DateTime($peminjaman["jam_mulai"]),
+                jamSelesai: new DateTime($peminjaman["jam_selesai"]),
                 keterangan: $peminjaman["keterangan"],
                 status: $peminjaman["status"]
             );
@@ -181,15 +230,12 @@ class PeminjamanRepository implements IPeminjamanRepository
     {
         $this->database->query(
             sql: "SELECT
-            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan, p.keterangan, p.status, 
-            jkm.jk_id jkm_id, jkm.jam_mulai jkm_mulai, jkm.jam_selesai jkm_selesai, 
-            jks.jk_id jks_id, jks.jam_mulai jks_mulai, jks.jam_selesai jks_selesai,
+            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan_mulai, p.tanggal_kegiatan_selesai, 
+            p.keterangan, p.status, p.jam_mulai, p.jam_selesai,
             u.id user_id, u.username, u.email, ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp
             FROM peminjaman p
             LEFT OUTER JOIN users u ON u.id = p.user_id
             LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id
-            LEFT OUTER JOIN jamkuliah jkm ON jkm.jk_id = p.jk_mulai
-            LEFT OUTER JOIN jamkuliah jks ON jks.jk_id = p.jk_selesai
             WHERE p.id = ?",
             params: [
                 $peminjaman_id
@@ -215,17 +261,10 @@ class PeminjamanRepository implements IPeminjamanRepository
             ),
             ruang: $ruangan,
             tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
-            tanggalKegiatan: new DateTime($peminjaman["tanggal_kegiatan"]),
-            jamMulai: new JamKuliah(
-                jkId: $peminjaman["jkm_id"],
-                jamMulai: $peminjaman["jkm_mulai"],
-                jamSelesai: $peminjaman["jkm_selesai"],
-            ),
-            jamSelesai: new JamKuliah(
-                jkId: $peminjaman["jks_id"],
-                jamMulai: $peminjaman["jks_mulai"],
-                jamSelesai: $peminjaman["jks_selesai"]
-            ),
+            tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
+            tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
+            jamMulai: new DateTime($peminjaman["jam_mu"]),
+            jamSelesai: new DateTime($peminjaman["jam_selesai"]),
             keterangan: $peminjaman["keterangan"],
             status: $peminjaman["status"]
         );
@@ -244,7 +283,16 @@ class PeminjamanRepository implements IPeminjamanRepository
             ]
         );
 
-        return $this->database->result()->fetch_all();
+        $result = $this->database->result();
+        $ruangan = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $ruangan[] = new RuangKelas(
+                kodeRuang: $row["kode_ruang"],
+            );
+        }
+
+        return $ruangan;
     }
 
     /**
@@ -255,9 +303,17 @@ class PeminjamanRepository implements IPeminjamanRepository
     {
         $this->database->query(
             sql: "UPDATE peminjaman SET
-                status = ?,
+                tanggal_kegiatan_mulai = ?,
+                tanggal_kegiatan_selesai = ?,
+                jam_mulai = ?,
+                jam_selesai = ?,
+                status = ?
                 WHERE id = ?",
             params: [
+                $peminjaman["tanggalKegiatanMulai"],
+                $peminjaman["tanggalKegiatanSelesai"],
+                $peminjaman["jamMulai"],
+                $peminjaman["jamSelesai"],
                 $peminjaman["status"],
                 $peminjaman["peminjamanId"],
             ]
@@ -266,25 +322,22 @@ class PeminjamanRepository implements IPeminjamanRepository
 
     /**
      * @param int $peminjamanId
-     * @return bool
+     * @return void
      */
     public function delete($peminjamanId)
     {
         $this->database->query(
-            sql: "DELETE FROM peminjaman
-                WHERE status = 'Selesai' AND id = ?",
+            sql: 'DELETE FROM detailpeminjaman WHERE peminjaman_id = ?',
             params: [
                 $peminjamanId
             ]
         );
 
         $this->database->query(
-            sql: "SELECT id FROM peminjaman WHERE id = ?",
+            sql: "DELETE FROM peminjaman WHERE id = ?",
             params: [
                 $peminjamanId
             ]
         );
-
-        return $this->database->result()->num_rows <= 0;
     }
 }

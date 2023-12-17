@@ -19,7 +19,6 @@ class DosenRepository extends UserRepository
             d.nip, r.kode_ruang, r.nama_ruang, r.kapasitas, r.lantai
             FROM users u 
                 JOIN userdetails ud ON ud.user_id = u.id
-                JOIN dosen d ON d.user_id = u.id
                 JOIN ruang r ON r.kode_ruang  = d.kode_ruang
                 WHERE ud.is_dosen = 1'
         );
@@ -65,8 +64,7 @@ class DosenRepository extends UserRepository
             r.kode_ruang, r.nama_ruang, r.kapasitas, r.lantai
             FROM users u 
                 JOIN userdetails ud ON ud.user_id = u.id
-                JOIN dosen d ON d.user_id = u.id
-                JOIN ruang r ON r.kode_ruang  = d.kode_ruang
+                JOIN ruang r ON r.kode_ruang  = ud.kode_ruang
                 WHERE ud.is_dosen = 1 AND u.id = ?',
             params: [
                 $id
@@ -84,7 +82,8 @@ class DosenRepository extends UserRepository
                 namaLengkap: $row["nama_lengkap"],
                 alamat: $row["alamat"],
                 noTelp: $row["no_telp"],
-                fotoProfil: $row["foto_profil"]
+                fotoProfil: $row["foto_profil"],
+                kodeRuang: $row["kode_ruang"]
             ),
             ruang: new RuangDosen(
                 kodeRuang: $row["kode_ruang"],
@@ -132,35 +131,5 @@ class DosenRepository extends UserRepository
         }
 
         return $users;
-    }
-
-    /**
-     * @param Dosen $dosen
-     * @return void
-     */
-    public function update($dosen)
-    {
-        $userDetails = $dosen->getUserDetails();
-        $query = 'UPDATE userdetails SET
-        nomor_induk = ?,
-        nama_lengkap = ?,
-        alamat = ?,
-        no_telp = ?,
-        foto_profil = ?,
-        kode_ruang = ?
-        WHERE user_id = ?';
-
-        $this->database->query(
-            sql: $query,
-            params: [
-                $userDetails->getNomorInduk(),
-                $userDetails->getNamaLengkap(),
-                $userDetails->getAlamat(),
-                $userDetails->getNoTelp(),
-                $userDetails->getFotoProfil(),
-                $dosen->getRuang()->getKodeRuang(),
-                $dosen->getId(),
-            ]
-        );
     }
 }

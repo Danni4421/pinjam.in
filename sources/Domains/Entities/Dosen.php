@@ -1,6 +1,6 @@
 <?php
 
-class Dosen extends User
+class Dosen extends User implements HasRequest
 {
     private ?Ruang $ruang;
 
@@ -32,5 +32,26 @@ class Dosen extends User
     public function getRuang()
     {
         return $this->ruang;
+    }
+
+    public function toArray()
+    {
+        $userDetails = $this->getUserDetails();
+
+        return [
+            "id" => $this->getId(),
+            "username" => $this->getUsername(),
+            "email" => $this->getEmail(),
+            "nip" => $userDetails->getNomorInduk(),
+            "namaLengkap" => $userDetails->getNamaLengkap(),
+            "alamat" => $userDetails->getAlamat(),
+            "noTelp" => $userDetails->getNoTelp(),
+            "fotoProfil" => ImageManagerHelper::get(
+                is_null($userDetails->getFotoProfil()) ? "" :
+                    $userDetails->getFotoProfil(),
+                "profile"
+            ),
+            "kodeRuang" => $userDetails->getKodeRuang(),
+        ];
     }
 }
