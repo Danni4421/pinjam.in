@@ -12,7 +12,7 @@
     ></script>
   </head>
   <body>
-    <div class="container">
+    <div class="container <?= $uri === "/register" ? "log-in" : "" ?>">
       <div class="box"></div>
       <div class="container-forms">
         <div class="container-info">

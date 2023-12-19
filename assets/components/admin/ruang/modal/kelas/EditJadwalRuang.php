@@ -1,4 +1,4 @@
-<div class="modal fade" id="editJadwal">
+<div class="modal fade" id="modalEditJadwal">
   <div class="modal-dialog modal-lg" style="width: 50%;">
     <div class="modal-content" style="background-color: #D9D9D9;">
       <div class="modal-header">
@@ -9,12 +9,12 @@
       </div>
       <div class="modal-body">
         <div class="card">
-          <form>
+          <form id="form-edit-jadwal">
             <div class="card-body">
               <div class="form-group">
                 <label for="hari">Hari</label>
-                <select name="hari" id="hari" class="form-control">
-                  <option value="2" selected>Senin</option>
+                <select name="hari" id="edit-hari" class="form-control">
+                  <option value="2">Senin</option>
                   <option value="3">Selasa</option>
                   <option value="4">Rabu</option>
                   <option value="5">Kamis</option>
@@ -22,23 +22,19 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="jam">Jam</label>
-                <input type="text" class="form-control" id="jam" placeholder="">
-              </div>
-              <div class="form-group">
-                <label for="jam">Jam</label>
-                <input type="text" class="form-control" id="jam" placeholder="">
-              </div>
-              <div class="form-group">
-                <select class="form-select" id="multiple-select-field" name="ruang" data-placeholder="Pilih Mata Kuliah">
-                  <option>Lab Sistem Informasi 1</option>
-                  <option>Lab Sistem Informasi 2</option>
-                  <option>Lab Sistem Informasi 3</option>
+                <label for="edit-jam-mulai">Jam Mulai</label>
+                <select class="custom-select" id="edit-jam-mulai">
                 </select>
               </div>
               <div class="form-group">
-                <label for="mataKuliah">Mata Kuliah</label>
-                <input type="text" class="form-control" id="mataKuliah" placeholder="">
+                <label for="edit-jam-selesai">Jam Selesai</label>
+                <select class="custom-select" id="edit-jam-selesai">
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="edit-mataKuliah">Mata Kuliah</label>
+                <select class="form-control" id="edit-matakuliah" name="ruang" data-placeholder="Pilih Mata Kuliah">
+                </select>
               </div>
             </div>
             <div class="card-footer">

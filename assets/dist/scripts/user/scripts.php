@@ -20,3 +20,4 @@
 
 <!-- Main JS File -->
 <script src="assets/dist/scripts/user/main.js"></script>
+<script src="assets/dist/scripts/user/guide.js"></script>

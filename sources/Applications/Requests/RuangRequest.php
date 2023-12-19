@@ -1,5 +1,7 @@
 <?php
 
+use function PHPSTORM_META\type;
+
 class RuangRequest extends Request
 {
   public function request(array $payload)
@@ -23,6 +25,14 @@ class RuangRequest extends Request
           return $this->getRuangByCapacity(ruangUseCase: $ruangKelasUseCase, amount: $amount);
         }
         return $this->getRuang($ruangKelasUseCase);
+      } elseif ($payload["type"] == "lab") {
+        if (isset($payload["floor"])) {
+          return $this->getRuangLabByFloor(ruangUseCase: $ruangKelasUseCase, floor: (int) $payload["floor"], type: $payload["type"], amount: (int) $payload["amount"]);
+        }
+
+        return $this->getRuangLabByFloor(ruangUseCase: $ruangKelasUseCase, type: $payload["type"], amount: (int) $payload["amount"]);
+      } elseif ($payload["type"] == "search") {
+        return $this->searchRuang(ruangUseCase: $ruangKelasUseCase, searchString: strtolower($payload["searchInput"]));
       }
     } elseif ($payload["method"] == "DETAIL") {
       if ($payload["type"] == "rd") {
@@ -112,6 +122,27 @@ class RuangRequest extends Request
   }
 
   /**
+   * Get Ruang Laboratorium By Floor
+   *
+   * @param RuangUseCase $ruangUseCase
+   * @return array
+   */
+  private function getRuangLabByFloor($ruangUseCase, $floor = 6, $type, $amount)
+  {
+    $ruangan = $ruangUseCase->filterRuang(floor: $floor, type: $type, amount: $amount);
+    $list_ruang = [];
+
+    foreach ($ruangan as $ruang) {
+      $list_ruang[] = $ruang->toArray();
+    }
+
+    return [
+      "status" => "success",
+      "data" => $list_ruang
+    ];
+  }
+
+  /**
    * Get Detail Specific Room
    *
    * @param RuangUseCase $ruangUseCase
@@ -124,6 +155,28 @@ class RuangRequest extends Request
     return [
       "status" => "success",
       "data" => $ruangan->toArray()
+    ];
+  }
+
+  /**
+   * Search Ruang By String Name
+   *
+   * @param RuangUseCase $ruangUseCase
+   * @param string $searchString
+   * @return array
+   */
+  private function searchRuang($ruangUseCase, $searchString)
+  {
+    $ruangan = $ruangUseCase->searchRuangByName(searchString: $searchString);
+    $list_ruang = [];
+
+    foreach ($ruangan as $ruang) {
+      $list_ruang[] = $ruang->toArray();
+    }
+
+    return [
+      "status" => "success",
+      "data" => $list_ruang
     ];
   }
 

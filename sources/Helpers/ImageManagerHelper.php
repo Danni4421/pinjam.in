@@ -49,7 +49,7 @@ class ImageManagerHelper
 
         switch ($type) {
             case "profile":
-                return static::$base_path . '/../default.photo.profile.jpeg';
+                return static::$base_path . '/../default.foto.profile.jpg';
             case "form":
                 return static::$base_path . '/../default.jpg';
             case "ruang-kelas":

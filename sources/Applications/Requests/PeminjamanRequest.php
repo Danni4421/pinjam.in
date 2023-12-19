@@ -19,6 +19,9 @@ class PeminjamanRequest extends Request
 
     if ($payload["method"] == "GET") {
       if ($payload["type"] == "riwayat") {
+        if (isset($payload["userId"])) {
+          return $this->getRiwayat($peminjamanUseCase, $payload["userId"]);
+        }
         return $this->getRiwayat($peminjamanUseCase);
       } elseif ($payload["type"] == "persetujuan") {
         return $this->getOnProcessPeminjaman($peminjamanUseCase);
@@ -27,6 +30,8 @@ class PeminjamanRequest extends Request
       } elseif ($payload["type"] == "not-done") {
         return $this->isNotDonePeminjaman($peminjamanUseCase);
       }
+    } elseif ($payload["method"] == "DETAIL") {
+      return $this->getDetailPeminjaman($peminjamanUseCase, $payload["peminjamanId"]);
     } elseif ($payload["method"] == "VERIFY") {
       $result = $this->verifyAvailablity($ruangUseCase, $payload["data"]);
       return [
@@ -46,9 +51,9 @@ class PeminjamanRequest extends Request
    * @param PeminjamanUseCase $peminjamanUseCase
    * @return array
    */
-  private function getRiwayat($peminjamanUseCase)
+  private function getRiwayat($peminjamanUseCase, $userId = null)
   {
-    $peminjaman = $peminjamanUseCase->getPeminjaman();
+    $peminjaman = is_null($userId) ? $peminjamanUseCase->getPeminjaman() : $peminjamanUseCase->getPeminjaman(userId: $userId);
     $list_peminjaman = [];
 
     foreach ($peminjaman as $p) {
@@ -79,6 +84,22 @@ class PeminjamanRequest extends Request
     return [
       "status" => "success",
       "data" => $list_peminjaman,
+    ];
+  }
+
+  /**
+   * Get Detail Peminjaman
+   *
+   * @param PeminjamanUseCase $peminjamanUseCase
+   * @param int $peminjamanId
+   * @return array
+   */
+  private function getDetailPeminjaman($peminjamanUseCase, $peminjamanId)
+  {
+    $peminjaman = $peminjamanUseCase->getDetailPeminjaman(peminjamanId: $peminjamanId);
+    return [
+      "status" => "success",
+      "data" => $peminjaman->toArray(),
     ];
   }
 
@@ -121,7 +142,7 @@ class PeminjamanRequest extends Request
    *
    * @param RuangUseCase $ruangUseCase
    * @param array $payload
-   * @return bool
+   * @return array
    */
   private function verifyAvailablity($ruangUseCase, $payload)
   {

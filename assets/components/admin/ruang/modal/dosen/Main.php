@@ -48,6 +48,11 @@
                   <th scope="row">Lantai</th>
                   <td><span id="mainModalLantai"></span></td>
                 </tr>
+                <tr>
+                  <th scope="row">Fasilitas</th>
+                  <td id="list-fasilitas" class="d-flex justify-content-between">
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>

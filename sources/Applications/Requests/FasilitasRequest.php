@@ -8,14 +8,30 @@ class FasilitasRequest extends Request
     $fasilitasUseCase = new FasilitasUseCase(fasilitasRepository: $fasilitasRepository);
 
     if ($payload["type"] == "add") {
+      if (isset($payload["data"]["kode_ruang"])) {
+        $fasilitasUseCase->addFasilitasToRuang($payload["data"]);
+
+        return [
+          "status" => "success",
+          "data" => "Berhasil menambahkan fasilitas"
+        ];
+      }
+
       $fasilitasUseCase->addFasilitas($payload["data"]);
 
       return [
         "status" => "success",
-        "data" => "berhasil menambah fasilitas"
+        "data" => "Berhasil menambahkan fasilitas"
       ];
     } elseif ($payload["type"] == "get") {
       $fasilitas = $fasilitasUseCase->getAllFasilitas();
+
+      return [
+        "status" => "success",
+        "data" => $fasilitas
+      ];
+    } elseif ($payload["type"] == "ruang") {
+      $fasilitas = $fasilitasUseCase->getFasilitasByRuang($payload["kode_ruang"]);
 
       return [
         "status" => "success",
@@ -29,14 +45,23 @@ class FasilitasRequest extends Request
 
       return [
         "status" => "success",
-        "data" => "berhasil update"
+        "data" => "Berhasil memperbarui fasilitas"
       ];
     } elseif ($payload["type"] == "delete") {
+      if (isset($payload["kode_ruang"])) {
+        $fasilitasUseCase->deleteFasilitasByRuang(kodeRuang: $payload["kode_ruang"], fasilitasId: $payload["fasilitas_id"]);
+
+        return [
+          "status" => "success",
+          "data" => "Berhasil menghapus fasilitas"
+        ];
+      }
+
       $fasilitasUseCase->deleteFasilitas(fasilitasId: $payload["fasilitas_id"]);
 
       return [
         "status" => "success",
-        "data" => "berhasil delete"
+        "data" => "Berhasil menghapus fasilitas"
       ];
     }
   }

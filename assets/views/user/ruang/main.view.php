@@ -22,148 +22,89 @@
           <!-- ======= About Section ======= -->
           <div class="row g-0">
             <div class="container-fluid mt-3">
-              <div class="section-title">
-                <h2>Ruang Kelas</h2>
-                <p>Ruang Laboratorium</p>
-              </div>
-              <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3 gap-5">
-                <div class="card col-12 col-md mb-3 p-0" style="max-width: 30%;">
-                  <div class="card-header" style="background-color: #1318A5; color: white;">
-                    <h5 class="card-title"><strong>Laboratorium Pemograman</strong></h5>
-                  </div>
-                  <div class="card-body">
-                    <img src="https://jti.polinema.ac.id/wp-content/uploads/2018/06/LPR-3-768x264.jpg" alt="lp" class="img-fluid rounded img-size">
-                    <p class="card-text mt-4">
-                      Ruang Laboratorium Pemograman
-                    </p>
-                    <br>
-                    <h4 class="card-title"><strong>Fasilitas yang dimiliki :</strong></h4>
-                    <div class="facility-grid">
-                      <div class="facility-card small">
-                        <i class="bi bi-projector-fill"></i>
-                        <span>LCD Proyektor</span>
-                      </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>AC</span>
-                      </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>Meja</span>
-                      </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>Kursi</span>
+              <?php
+              if (isset($query["search"])) { ?>
+                <div class="section-title">
+                  <h2>Hasil Pencarian</h2>
+                  <p>Ruangan Gedung JTI </p>
+                </div>
+                <div class="search-container row g-0" data-search="<?= $query["search"] ?>">
+                  <div class="card text-center">
+                    <div class="card-body">
+                      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6" id="search-result-container">
                       </div>
                     </div>
-                    <a href="ruangLab.php" class="btn btn-primary mt-5" style="width: 100%;">Lihat
-                      Semua
-                      Ruangan</a>
                   </div>
                 </div>
-                <div class="card col-12 col-md mb-3 p-0" style="max-width: 30%;">
-                  <div class="card-header" style="background-color: #1318A5; color: white;">
-                    <h5 class="card-title"><strong>Laboratorium Sistem Informasi</strong></h5>
-                  </div>
-                  <div class="card-body">
-                    <img src="https://jti.polinema.ac.id/wp-content/uploads/2018/06/LPR-4-768x387.jpg" alt="lp" class="img-fluid rounded img-size">
-                    <p class="card-text mt-4">
-                      Ruang Laboratorium Pemograman
-                    </p>
-                    <br>
-                    <h4 class="card-title"><strong>Fasilitas yang dimiliki :</strong></h4>
-                    <div class="facility-grid">
-                      <div class="facility-card small">
-                        <i class="bi bi-projector-fill"></i>
-                        <span>LCD Proyektor</span>
+              <?php } else { ?>
+                <div class="section-title">
+                  <h2>List Ruang</h2>
+                  <p>Ruang Gedung JTI</p>
+                </div>
+                <div class="row row-cols-1 row-cols-md-2">
+                  <div class="col">
+                    <div class="card mb-3">
+                      <div class="card-header" style="background-color: #1318A5; color: white;">
+                        <h5 class="card-title"><strong>Ruang Teori</strong></h5>
                       </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>AC</span>
-                      </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>Meja</span>
-                      </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>Kursi</span>
+                      <div class="card-body">
+                        <img src="https://jti.polinema.ac.id/wp-content/uploads/2018/06/LPR-3-768x264.jpg" alt="lp" class="img-fluid rounded img-size">
+                        <h3 class="card-text mt-4">
+                          Ruang Teori
+                        </h3>
+                        <br>
+                        <a href="/ruang/kelas" class="btn btn-primary mt-5" style="width: 100%;">Lihat Semua Ruang Kelas</a>
                       </div>
                     </div>
-                    <a href="AllRuangLab.html" class="btn btn-primary mt-5" style="width: 100%;">Lihat
-                      Semua
-                      Ruangan</a>
                   </div>
-                </div>
-                <div class="card col-12 col-md mb-3 p-0" style="max-width: 30%;">
-                  <div class="card-header" style="background-color: #1318A5; color: white;">
-                    <h5 class="card-title"><strong>Laboratorium Proyek</strong></h5>
-                  </div>
-                  <div class="card-body">
-                    <img src="https://jti.polinema.ac.id/wp-content/uploads/2018/06/LPJ-3-768x445.jpg" alt="lp" class="img-fluid rounded img-size">
-                    <p class="card-text mt-4">
-                      Ruang Laboratorium Pemograman
-                    </p>
-                    <br>
-                    <h4 class="card-title"><strong>Fasilitas yang dimiliki :</strong></h4>
-                    <div class="facility-grid">
-                      <div class="facility-card small">
-                        <i class="bi bi-projector-fill"></i>
-                        <span>LCD Proyektor</span>
+                  <div class="col">
+                    <div class="card mb-3">
+                      <div class="card-header" style="background-color: #1318A5; color: white;">
+                        <h5 class="card-title"><strong>Ruang Laboratorium</strong></h5>
                       </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>AC</span>
-                      </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>Meja</span>
-                      </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>Kursi</span>
+                      <div class="card-body">
+                        <img src="https://jti.polinema.ac.id/wp-content/uploads/2018/06/LPR-3-768x264.jpg" alt="lp" class="img-fluid rounded img-size">
+                        <h3 class="card-text mt-4">
+                          Ruang Teori
+                        </h3>
+                        <br>
+                        <a href="/ruang/laboratorium" class="btn btn-primary mt-5" style="width: 100%;">Lihat Semua Ruang Laboratorium</a>
                       </div>
                     </div>
-                    <a href="AllRuangLab.html" class="btn btn-primary mt-5" style="width: 100%;">Lihat
-                      Semua
-                      Ruangan</a>
                   </div>
-                </div>
-                <div class="card col-12 col-md mb-3 p-0" style="max-width: 30%;">
-                  <div class="card-header" style="background-color: #1318A5; color: white;">
-                    <h5 class="card-title"><strong>Laboratorium Visi Komputer</strong></h5>
-                  </div>
-                  <div class="card-body">
-                    <img src="https://jti.polinema.ac.id/wp-content/uploads/2017/12/DSC03057-copy-e1512906662932-768x432.jpg" alt="lp" class="img-fluid rounded img-size">
-                    <p class="card-text mt-4">
-                      Ruang Laboratorium Pemograman
-                    </p>
-                    <br>
-                    <h4 class="card-title"><strong>Fasilitas yang dimiliki :</strong></h4>
-                    <div class="facility-grid">
-                      <div class="facility-card small">
-                        <i class="bi bi-projector-fill"></i>
-                        <span>LCD Proyektor</span>
+                  <div class="col">
+                    <div class="card mb-3">
+                      <div class="card-header" style="background-color: #1318A5; color: white;">
+                        <h5 class="card-title"><strong>Ruang Auditorium</strong></h5>
                       </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>AC</span>
-                      </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>Meja</span>
-                      </div>
-                      <div class="facility-card small">
-                        <i class="fas fa-check"></i>
-                        <span>Kursi</span>
+                      <div class="card-body">
+                        <img src="https://jti.polinema.ac.id/wp-content/uploads/2018/06/LPR-3-768x264.jpg" alt="lp" class="img-fluid rounded img-size">
+                        <h3 class="card-text mt-4">
+                          Ruang Teori
+                        </h3>
+                        <br>
+                        <a href="/ruang/auditorium" class="btn btn-primary mt-5" style="width: 100%;">Lihat Ruangan</a>
                       </div>
                     </div>
-                    <a href="AllRuangLab.html" class="btn btn-primary mt-5" style="width: 100%;">Lihat
-                      Semua
-                      Ruangan</a>
+                  </div>
+                  <div class="col">
+                    <div class="card mb-3">
+                      <div class="card-header" style="background-color: #1318A5; color: white;">
+                        <h5 class="card-title"><strong>Ruang Dosen</strong></h5>
+                      </div>
+                      <div class="card-body">
+                        <img src="https://jti.polinema.ac.id/wp-content/uploads/2018/06/LPR-3-768x264.jpg" alt="lp" class="img-fluid rounded img-size">
+                        <h3 class="card-text mt-4">
+                          Ruang Teori
+                        </h3>
+                        <br>
+                        <a href="/ruang/dosen" class="btn btn-primary mt-5" style="width: 100%;">Lihat Ruang Dosen</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              <?php }
+              ?>
             </div>
           </div>
         </div>
@@ -177,6 +118,63 @@
   require_once 'assets/components/user/Footer.php';
   require_once 'assets/dist/scripts/user/scripts.php';
   ?>
+
+  <script>
+    $(document).ready(function() {
+      $('#search-result-container').html('')
+      const search = $('.search-container').data('search')
+
+      $.ajax({
+        url: '../request.php',
+        type: 'POST',
+        contentType: 'application/json',
+        processData: false,
+        data: JSON.stringify({
+          request_key: 'RuangRequest',
+          payload: {
+            method: "GET",
+            type: 'search',
+            searchInput: search
+          }
+        }),
+        success: function(response) {
+          const ruang = JSON.parse(response)
+
+          if (!ruang.hasOwnProperty('error')) {
+            $.each(ruang, function(index, item) {
+              let facilities = $(`<div class="facilities-container my-2 d-flex gap-2"></div>`)
+              $.each(item.fasilitas, function(index, item) {
+                facilities.append(`
+                <span class="${item.status === "Baik" ? "main-badge" : "error-main-badge"} ">
+                  <i class="${item.icon}"></i>
+                </span>
+              `)
+              })
+
+              const outerContainer = $(`<div class="col-sm-2 mb-3 mb-sm-0"></div>`)
+              const innerContainer = $(`<div class="card" id="ruang-lab">
+                <img src="../${item.fotoRuang}" class="card-img-top">
+              </div>
+            `)
+              const cardBody = $(`<div class="card-body text-start">
+                  <a class="btn-ruang-lab">
+                    <h6>${item.namaRuang}</h6>
+                  </a>
+                </div>
+              `)
+              cardBody.append(facilities)
+              cardBody.append(`<a href="/peminjaman?kode=${item.kodeRuang}" class="btn btn-primary btn-sm">Pinjam Ruangan</a>`)
+
+              innerContainer.append(cardBody)
+              outerContainer.append(innerContainer)
+
+              $('#search-result-container').append(outerContainer)
+            })
+          }
+        }
+      })
+    });
+  </script>
 
 </body>
 

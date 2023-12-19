@@ -1,6 +1,6 @@
 <?php
 
-class Jadwal
+class Jadwal implements HasRequest
 {
     private int $jadwalId;
     private int $hari;
@@ -47,5 +47,28 @@ class Jadwal
     public function getJamSelesai()
     {
         return $this->jamSelesai;
+    }
+
+    public function toArray()
+    {
+        return [
+            "jadwalId" => $this->getJadwalId(),
+            "mataKuliah" => [
+                "mkId" => $this->getMataKuliah()->getMkId(),
+                "namaMk" => $this->getMataKuliah()->getNamaMk(),
+                "sks" => $this->getMataKuliah()->getSks(),
+            ],
+            "hari" => $this->getHari(),
+            "jamMulai" => [
+                "jkId" => $this->getJamMulai()->getJkId(),
+                "jamMulai" => $this->getJamMulai()->getJamMulai()->format("H:i:s"),
+                "jamSelesai" => $this->getJamMulai()->getJamSelesai()->format("H:i:s")
+            ],
+            "jamSelesai" => [
+                "jkId" => $this->getJamSelesai()->getJkId(),
+                "namaMk" => $this->getJamSelesai()->getJamMulai()->format("H:i:s"),
+                "sks" => $this->getJamSelesai()->getJamSelesai()->format("H:i:s")
+            ],
+        ];
     }
 }

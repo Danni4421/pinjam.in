@@ -648,7 +648,10 @@ section {
 }
 
 .section-title {
-  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 30vw;
 }
 
 .section-title h2 {

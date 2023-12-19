@@ -19,9 +19,9 @@
                     <div data-aos="zoom-out">
                         <h1>Mau Pinjam Ruang Anti Ribet? <span>Pinjam.in</span> aja</h1>
                         <h2>Dari Pengajuan Sampai Persetujuan Semua Proses Peminjaman Dilakukan Secara Online</h2>
-                        <form style="width: 410px;">
+                        <form style="width: 410px;" action="/ruang" method="GET">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Cari Ruangan..">
+                                <input type="text" class="form-control" name="search" placeholder="Cari Ruangan..">
                                 <div class="input-group-text">
                                     <button class="btn btn-default" type="submit">
                                         <i class="fas fa-search"></i>
@@ -37,8 +37,7 @@
             </div>
         </div>
 
-        <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 24 150 28 " preserveAspectRatio="none">
+        <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
             <defs>
                 <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
             </defs>
@@ -61,14 +60,11 @@
             <div class="container-fluid">
 
                 <div class="row">
-                    <div class="col-xl-5 col-lg-6 d-flex justify-content-center align-items-stretch"
-                        data-aos="fade-right">
-                        <img src="assets/dist/images/details-1.png" class="img-fluid" alt="logo"
-                            style="margin-left: 100px; margin-top: 80px;">
+                    <div class="col-xl-5 col-lg-6 d-flex justify-content-center align-items-stretch" data-aos="fade-right">
+                        <img src="assets/dist/images/details-1.png" class="img-fluid" alt="logo" style="margin-left: 100px; margin-top: 80px;">
                     </div>
 
-                    <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5"
-                        data-aos="fade-left">
+                    <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5" data-aos="fade-left">
                         <h3>Apa sih Pinjam.in itu?</h3>
                         <p>Pinjam.in merupakan sebuah website peminjaman ruangan di gedung Jurusan Teknologi Informasi
                             Politeknik
@@ -178,8 +174,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="count-box">
                             <i class="bi bi-building"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1"
-                                class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Perkantoran</p>
                         </div>
                     </div>
@@ -187,8 +182,7 @@
                     <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
                         <div class="count-box">
                             <i class="ri-bar-chart-box-line"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1"
-                                class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Laboratorium</p>
                         </div>
                     </div>
@@ -196,8 +190,7 @@
                     <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
                         <div class="count-box">
                             <i class="ri-calendar-todo-line"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="7" data-purecounter-duration="1"
-                                class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="7" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Ruang Kelas</p>
                         </div>
                     </div>
@@ -205,8 +198,7 @@
                     <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
                         <div class="count-box">
                             <i class="bi bi-bank"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1"
-                                class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Ruang Auditorium</p>
                         </div>
                     </div>
@@ -224,8 +216,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="count-box">
                             <i class="bi bi-book"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1"
-                                class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Ruang Baca</p>
                         </div>
                     </div>
@@ -233,8 +224,7 @@
                     <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
                         <div class="count-box">
                             <i class="bi bi-buildings"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1"
-                                class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Musholla</p>
                         </div>
                     </div>
@@ -242,8 +232,7 @@
                     <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
                         <div class="count-box">
                             <i class="bi bi-droplet"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1"
-                                class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Kamar Mandi</p>
                         </div>
                     </div>
@@ -251,8 +240,7 @@
                     <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
                         <div class="count-box">
                             <i class="ri-store-line"></i>
-                            <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1"
-                                class="purecounter"></span>
+                            <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1" class="purecounter"></span>
                             <p>Kantin</p>
                         </div>
                     </div>
@@ -265,7 +253,13 @@
         <!-- End Counts Section -->
 
         <!-- ======= Panduan Section ======= -->
-        <?php require_once 'assets/components/user/Panduan.php'; ?>
+        <div class="container guide p-4 my-3">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Penduan Peminjaman</h2>
+                <p>Ruangan Gedung JTI</p>
+            </div>
+            <?php require_once 'assets/components/user/Panduan.php'; ?>
+        </div>
         <!-- End Panduan Section -->
 
         <!-- ======= Pinjam Section ======= -->
@@ -290,73 +284,12 @@
         </section>
         <!-- End Pinjam Section -->
 
-        <!-- ======= Pembimbing Section ======= -->
-        <section id="dosen" class="team">
-            <div class="container">
-
-                <div class="section-title" data-aos="fade-up">
-                    <h2>Pembimbing</h2>
-                    <p>Dosen Pembimbing Proyek</p>
-                </div>
-
-                <div class="row" data-aos="fade-left">
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                            <div class="pic"><img
-                                    src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=XmTRRCMAAAAJ&citpid=1"
-                                    class="img-fluid" alt="" style="width: 261px; height: 372.8px;"></div>
-                            <div class="member-info">
-                                <h4 style="font-size: smaller;">Anugrah Nur Rahmanto, S.Sn., M.Ds.</h4>
-                                <span>Desain Antarmuka</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
-                        <div class="member" data-aos="zoom-in" data-aos-delay="200">
-                            <div class="pic"><img
-                                    src="https://scholar.googleusercontent.com/citations?view_op=view_photo&user=cduv_fAAAAAJ&citpid=1"
-                                    class="img-fluid" alt="" style="width: 261px; height: 372.8px;"></div>
-                            <div class="member-info">
-                                <h4 style="font-size: smaller;">Elok Nur Hamdana, S.T., M.T.</h4>
-                                <span>Desain Pemrograman WEB</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-                        <div class="member" data-aos="zoom-in" data-aos-delay="300">
-                            <div class="pic"><img src="https://jti.polinema.ac.id/wp-content/uploads/2017/09/imam.png"
-                                    class="img-fluid" alt="" style="width: 261px; height: 372.8px;"></div>
-                            <div class="member-info">
-                                <h4 style="font-size: smaller;">Imam Fahrur Rozi, S.T., M.T.</h4>
-                                <span>Pemrograman Berbasis Objek</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-                        <div class="member" data-aos="zoom-in" data-aos-delay="400">
-                            <div class="pic"><img src="https://jti.polinema.ac.id/wp-content/uploads/2017/09/dwi.png"
-                                    class="img-fluid" alt="" style="width: 261px; height: 372.8px;"></div>
-                            <div class="member-info">
-                                <h4 style="font-size: smaller;">Dwi Puspitasari, S.Kom., M.Kom.</h4>
-                                <span>Basis Data Lanjut</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-        <!-- End Pembimbing Section -->
+        <?php require_once 'assets/components/user/Gallery.php'; ?>
     </main>
 
-    <?php 
-        require_once 'assets/components/user/Footer.php';
-        require_once 'assets/dist/scripts/user/scripts.php';
+    <?php
+    require_once 'assets/components/user/Footer.php';
+    require_once 'assets/dist/scripts/user/scripts.php';
     ?>
 
 </body>

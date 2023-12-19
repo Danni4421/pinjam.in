@@ -53,7 +53,13 @@ class Route
         return false;
     }
 
-    public function resolve($query = null, $relativePath = '')
+    /**
+     * @param string $uri
+     * @param array $query
+     * @param string $relativePath
+     * @return void
+     */
+    public function resolve($uri, $query = null, $relativePath = '')
     {
         $routeView = explode(".", $this->view);
         $targetView = end($routeView) . ".view.php";

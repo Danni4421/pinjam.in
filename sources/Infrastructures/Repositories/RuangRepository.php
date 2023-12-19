@@ -108,13 +108,15 @@ abstract class RuangRepository implements IRuangRepository
             sql: "SELECT 
                 kode_ruang, nama_ruang, kapasitas, lantai, foto_ruang, is_ruang_dosen
             FROM ruang
-            WHERE nama_ruang LIKE '%$namaRuang%'"
+            WHERE nama_ruang LIKE '%$namaRuang%'",
         );
 
         $result = $this->database->result();
         $ruangan = [];
 
         while ($row = $result->fetch_assoc()) {
+            $fasilitas = $this->getFasilitas(kodeRuang: $row["kode_ruang"]);
+
             if ($row["is_ruang_dosen"]) {
                 $ruangan[] = new RuangDosen(
                     kodeRuang: $row["kode_ruang"],
@@ -122,7 +124,7 @@ abstract class RuangRepository implements IRuangRepository
                     kapasitas: $row["kapasitas"],
                     lantai: $row["lantai"],
                     fotoRuang: $row["foto_ruang"],
-                    fasilitas: $row["fasilitas"],
+                    fasilitas: $fasilitas,
                 );
             } else {
                 $ruangan[] = new RuangKelas(
@@ -131,7 +133,7 @@ abstract class RuangRepository implements IRuangRepository
                     kapasitas: $row["kapasitas"],
                     lantai: $row["lantai"],
                     fotoRuang: $row["foto_ruang"],
-                    fasilitas: $row["fasilitas"],
+                    fasilitas: $fasilitas,
                 );
             }
         }
@@ -174,10 +176,17 @@ abstract class RuangRepository implements IRuangRepository
         );
     }
 
+    /**
+     * @param string $kodeRuang
+     * @param int $tanggalKegiatan
+     * @param int $jamMulai
+     * @param int $jamSelesai
+     * @return bool
+     */
     public function verifyIsRuangAvailable($kodeRuang, $tanggalKegiatan, $jamMulai, $jamSelesai)
     {
         $this->database->query(
-            sql: "SELECT VerifyAvailableRoom(?, ?, ?, ?) as queryResult",
+            sql: "SELECT VerifyAvailableRoom(?, ?, ?, ?) as kodeRuang",
             params: [
                 $kodeRuang,
                 $tanggalKegiatan,
@@ -188,8 +197,6 @@ abstract class RuangRepository implements IRuangRepository
 
         $result = $this->database->result()->fetch_assoc();
 
-        if (is_null($result["queryResult"])) {
-            return true;
-        }
+        return is_null($result["kodeRuang"]);
     }
 }

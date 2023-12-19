@@ -27,6 +27,22 @@ class FasilitasRepository implements Repository
   }
 
   /**
+   * @param int $fasilitasId
+   * @param string $kodeRuang
+   * @param string $status
+   * @return void
+   */
+  public function addIntoRuang($fasilitasId, $kodeRuang, $status = 'Baik')
+  {
+    $this->database->query(
+      sql: 'INSERT INTO detailfasilitas (fasilitas_id, kode_ruang, status) VALUES(?, ?, ?)',
+      params: [
+        $fasilitasId, $kodeRuang, $status
+      ]
+    );
+  }
+
+  /**
    * @return Fasilitas[]
    */
   public function get()
@@ -57,7 +73,7 @@ class FasilitasRepository implements Repository
   public function getById($fasilitasId)
   {
     $this->database->query(
-      sql: 'SELECT * FROM fasilias',
+      sql: 'SELECT * FROM fasilitas',
     );
 
     $result = $this->database->result()->fetch_assoc();
@@ -68,6 +84,33 @@ class FasilitasRepository implements Repository
       icon: $result["icon"],
       status: ""
     );
+  }
+
+  public function getByRuang($kodeRuang)
+  {
+    $this->database->query(
+      sql: 'SELECT  f.fasilitas_id, f.nama_fasilitas, f.icon, df.status
+      FROM detailfasilitas df
+      LEFT OUTER JOIN fasilitas f ON f.fasilitas_id = df.fasilitas_id
+      WHERE kode_ruang = ?',
+      params: [
+        $kodeRuang
+      ]
+    );
+
+    $result = $this->database->result();
+    $list_fasilitas = [];
+
+    while ($row = $result->fetch_assoc()) {
+      $list_fasilitas[] = new Fasilitas(
+        fasilitasId: $row["fasilitas_id"],
+        namaFasilitas: $row["nama_fasilitas"],
+        icon: $row["icon"],
+        status: $row["status"]
+      );
+    }
+
+    return $list_fasilitas;
   }
 
   /**
@@ -95,6 +138,16 @@ class FasilitasRepository implements Repository
       sql: 'DELETE FROM fasilitas WHERE fasilitas_id = ?',
       params: [
         $fasilitasId
+      ]
+    );
+  }
+
+  public function deleteByRuang($kodeRuang, $fasilitasId)
+  {
+    $this->database->query(
+      sql: 'DELETE FROM detailfasilitas WHERE kode_ruang = ? AND fasilitas_id = ?',
+      params: [
+        $kodeRuang, $fasilitasId
       ]
     );
   }

@@ -82,21 +82,21 @@ function onClickEditUser(userId) {
         title: 'Ubah Data User',
         html: `
               <div>
-                <div class="form-group text-start">
+                <div class="form-group text-start d-flex flex-column">
                   <label class="form-label ms-5">NIM</label>
-                  <input id="nomorInduk" class="swal2-input" value="${nomorInduk !== null ? nomorInduk : ''}">
+                  <input id="nomorInduk" class="swal2-input" value="${nomorInduk !== null ? nomorInduk : ''}" maxLength="10">
                 </div>
-                <div class="form-group text-start">
+                <div class="form-group text-start d-flex flex-column">
                   <label class="form-label ms-5">Nama Lengkap</label>
                   <input id="namaLengkap" class="swal2-input" value="${namaLengkap !== null ? namaLengkap : ''}">
                 </div>
-                <div class="form-group text-start">
+                <div class="form-group text-start d-flex flex-column">
                   <label class="form-label ms-5">Alamat</label>
                   <input id="alamat" class="swal2-input" value="${alamat !== null ? alamat : ''}">
                 </div>
-                <div class="form-group text-start">
+                <div class="form-group text-start d-flex flex-column">
                   <label class="form-label ms-5">Nomor Telepon</label>
-                  <input id="noTelp" class="swal2-input" value="${noTelp !== null ? noTelp : ''}">
+                  <input id="noTelp" class="swal2-input" value="${noTelp !== null ? noTelp : ''}" maxLength="15">
                 </div>
               </div>
             `,
@@ -127,7 +127,7 @@ function onClickEditUser(userId) {
             data: JSON.stringify({
               request_key: 'UserUpdateFormRequest',
               payload: {
-                userId: id,
+                user_id: id,
                 nomor_induk: nomorInduk,
                 email: email,
                 nama_lengkap: namaLengkap,
@@ -154,7 +154,6 @@ function onClickEditUser(userId) {
 }
 
 function onClickDeleteUser(userId) {
-  console.log(userId)
   Swal.fire({
     title: 'Apakah Anda yakin?',
     text: 'Informasi user akan terhapus permanen!',

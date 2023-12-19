@@ -1,7 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="/admin" class="brand-link">
-        <img src="<?= $relativePath ?>assets/dist/images/jti.logo.png" alt="Logo JTI" class="brand-image">
-        <span class="brand-text font-weight-bold">Pinjam.in</span>
+        <img src="<?= $relativePath ?>assets/dist/images/pinjam.in.png" alt="Logo JTI" class="brand-image">
     </a>
     <div class="sidebar">
         <nav class="mt-2">

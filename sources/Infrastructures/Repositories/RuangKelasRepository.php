@@ -111,6 +111,37 @@ class RuangKelasRepository extends RuangRepository
         return $ruangan;
     }
 
+    public function getRuangFilterBy($amount = 30, $type = "RT", $floor = 5)
+    {
+        $this->database->query(
+            sql: 'SELECT * 
+            FROM ruang 
+            WHERE kapasitas = ? AND tipe = ? AND lantai = ?',
+            params: [
+                $amount,
+                $type,
+                $floor
+            ]
+        );
+
+        $result = $this->database->result();
+        $ruangan = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $ruangan[] = new RuangKelas(
+                kodeRuang: $row["kode_ruang"],
+                namaRuang: $row["nama_ruang"],
+                kapasitas: $row["kapasitas"],
+                lantai: $row["lantai"],
+                fotoRuang: $row["foto_ruang"],
+                jadwal: $this->getJadwal(kodeRuang: $row["kode_ruang"]),
+                fasilitas: $this->getFasilitas(kodeRuang: $row["kode_ruang"])
+            );
+        }
+
+        return $ruangan;
+    }
+
     /**
      * @param RuangKelas $ruang
      * @return array

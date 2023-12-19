@@ -7,16 +7,21 @@
 
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a class="nav-link nav-link-index active" href="/">Home</a></li>
+                <li><a class="nav-link nav-link-index" href="/">Home</a></li>
                 <li><a class="nav-link nav-link-index" href="/#features">Sarpras</a></li>
                 <li><a class="nav-link nav-link-index" href="/#panduan">Panduan</a></li>
                 <li><a class="nav-link nav-link-index" href="/#pinjam">Pinjam</a></li>
+                <li><a class="nav-link nav-link-index" href="/#gallery">Gallery JTI</a></li>
                 <li class="dropdown"><a class="nav-link" href="/ruang"><span>Ruangan</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a class="nav-link" href="/ruang/kelas">Ruang Kelas</a></li>
                         <li><a class="nav-link" href="/ruang/auditorium">Ruang Auditorium</a></li>
-                        <li><a class="nav-link" href="/ruang/laboratorium">Laboratorium</a></li>
+                        <li><a class="nav-link" href="/ruang/laboratorium?floor=6">Laboratorium</a></li>
                         <li><a class="nav-link" href="/ruang/dosen">Ruang Dosen</a></li>
+                        <li>
+                            <hr>
+                        </li>
+                        <li><a class="nav-link" href="/denah">Denah Ruang</a></li>
                     </ul>
                 </li>
                 <!-- Halaman Profil Guest-->

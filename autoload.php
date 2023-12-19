@@ -18,6 +18,7 @@ $container = [
             UserRequest::class,
             RuangRequest::class,
             MataKuliahRequest::class,
+            JadwalRequest::class,
             JamKuliahRequest::class,
             PeminjamanRequest::class,
             FasilitasRequest::class,
@@ -34,6 +35,7 @@ $container = [
             PeminjamanUseCase::class,
             MataKuliahUseCase::class,
             FasilitasUseCase::class,
+            JadwalUseCase::class,
             JamKuliahUseCase::class,
         ],
     ],
@@ -66,7 +68,8 @@ $container = [
             Repository::class,
             IUserRepository::class,
             IPeminjamanRepository::class,
-            IRuangRepository::class
+            IRuangRepository::class,
+            IJadwalRepository::class
         ]
     ],
 
@@ -101,6 +104,7 @@ $container = [
             PeminjamanRepository::class,
             MataKuliahRepository::class,
             FasilitasRepository::class,
+            JadwalRepository::class,
             JamKuliahRepository::class,
         ],
 

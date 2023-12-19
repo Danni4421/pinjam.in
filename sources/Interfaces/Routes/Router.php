@@ -2,17 +2,18 @@
 
 class Router
 {
-    private static array $routes = [];
+    /** @var Route[] */
+    private static $routes = [];
 
-    public static function route($url, $query, $relativePath)
+    public static function route($uri, $query, $relativePath)
     {
-        if ($url == "/logout") {
+        if ($uri == "/logout") {
             Auth::logout();
         }
 
         foreach (static::$routes as $route) {
-            if ($route->match($url)) {
-                $route->resolve($query, $relativePath);
+            if ($route->match($uri)) {
+                $route->resolve(uri: $uri, query: $query, relativePath: $relativePath);
                 return;
             }
         }

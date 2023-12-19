@@ -26,14 +26,14 @@ class UserUpdateFormRequest extends Request
       }
     }
 
-    $userUseCase->updateUser(userId: $payload["userId"], payload: [
+    $userUseCase->updateUser(userId: $payload["user_id"], payload: [
       "data" => [
         "nomor_induk" => $payload["nomor_induk"],
         "nama_lengkap" => $payload["nama_lengkap"],
         "alamat" => $payload["alamat"],
         "no_telp" => $payload["no_telp"],
         "foto_profil" => $baseUrl,
-        "kode_ruang" => $payload["kode_ruang"]
+        "kode_ruang" => isset($payload["kode_ruang"]) ? $payload["kode_ruang"] : null
       ]
     ]);
 

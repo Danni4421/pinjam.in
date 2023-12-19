@@ -75,11 +75,29 @@ class RuangUseCase
         return [];
     }
 
+
+    /**
+     * Get Ruang By Floor
+     * @param int $floor
+     * @param string $type
+     * @return RuangKelas[]
+     */
+    public function filterRuang($floor, $type, $amount)
+    {
+        if ($this->ruangRepository instanceof RuangKelasRepository) {
+            return $this->ruangRepository->getRuangFilterBy(
+                type: $type,
+                floor: $floor,
+                amount: $amount
+            );
+        }
+    }
+
     /**
      * @param string $searchString
      * @return Ruang[]
      */
-    public function searchRuang($searchString)
+    public function searchRuangByName($searchString)
     {
         return $this->ruangRepository->search($searchString);
     }

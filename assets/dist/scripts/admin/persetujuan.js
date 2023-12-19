@@ -1,15 +1,16 @@
 let tableRiwayat
 
 $(document).ready(function () {
-  tablePersetujuan = $('#table-riwayat').DataTable({
+  tablePersetujuan = $('#table-persetujuan').DataTable({
     ajax: {
       url: '../request.php',
       type: 'POST',
       contentType: 'application/json',
       data: function (d) {
         return JSON.stringify({
-          request_key: 'GetPeminjamanRequest',
+          request_key: 'PeminjamanRequest',
           payload: {
+            method: 'GET',
             type: 'persetujuan'
           }
         })
@@ -49,7 +50,11 @@ $(document).ready(function () {
         type: 'date'
       },
       {
-        data: 'tanggalKegiatan',
+        data: 'tanggalKegiatanMulai',
+        type: 'date'
+      },
+      {
+        data: 'tanggalKegiatanSelesai',
         type: 'date'
       },
       {
@@ -77,13 +82,13 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row, meta) {
           return `
-                                <button type="button" class="btn btn-success" onclick="onClickApprovePeminjaman(${row.peminjamanId})">
-                                    <i class="fas fa-check"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger" onclick="onClickRejectPeminjaman(${row.peminjamanId})">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                                `
+          <button type="button" class="btn btn-success" onclick="onClickApprovePeminjaman(${row.peminjamanId})">
+              <i class="fas fa-check"></i>
+          </button>
+          <button type="button" class="btn btn-danger" onclick="onClickRejectPeminjaman(${row.peminjamanId})">
+              <i class="fas fa-times"></i>
+          </button>
+          `
         }
       }
     ]
@@ -91,5 +96,119 @@ $(document).ready(function () {
 })
 
 function onClickApprovePeminjaman(peminjamanId) {
-  $.ajax({})
+  $.ajax({
+    url: '../request.php',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      request_key: 'PeminjamanRequest',
+      payload: {
+        method: 'DETAIL',
+        peminjamanId
+      }
+    }),
+    success: function (response) {
+      const { tanggalKegiatanMulai, tanggalKegiatanSelesai, jamMulai, jamSelesai } = JSON.parse(response)
+
+      Swal.fire({
+        title: 'Anda yakin ingin menyetujui peminjaman?',
+        text: 'Tindakan ini akan memperbarui status peminjaman!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Iya, Setujui!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '../request.php',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+              request_key: 'PeminjamanRequest',
+              payload: {
+                method: 'UPDATE',
+                data: {
+                  peminjamanId,
+                  tanggalKegiatanMulai,
+                  tanggalKegiatanSelesai,
+                  jamMulai,
+                  jamSelesai,
+                  status: 'Disetujui'
+                }
+              }
+            }),
+            success: function (response) {
+              Swal.fire({
+                title: 'Berhasil!',
+                text: `Peminjaman telah disetujui`,
+                icon: 'success'
+              })
+
+              tablePersetujuan.ajax.reload()
+            }
+          })
+        }
+      })
+    }
+  })
+}
+
+function onClickRejectPeminjaman(peminjamanId) {
+  $.ajax({
+    url: '../request.php',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      request_key: 'PeminjamanRequest',
+      payload: {
+        method: 'DETAIL',
+        peminjamanId
+      }
+    }),
+    success: function (response) {
+      const { tanggalKegiatanMulai, tanggalKegiatanSelesai, jamMulai, jamSelesai } = JSON.parse(response)
+
+      Swal.fire({
+        title: 'Anda yakin ingin menolak peminjaman?',
+        text: 'Status peminjaman akan ditolak!',
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Iya, tolak!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '../request.php',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+              request_key: 'PeminjamanRequest',
+              payload: {
+                method: 'UPDATE',
+                data: {
+                  peminjamanId,
+                  tanggalKegiatanMulai,
+                  tanggalKegiatanSelesai,
+                  jamMulai,
+                  jamSelesai,
+                  status: 'Ditolak'
+                }
+              }
+            }),
+            success: function (response) {
+              Swal.fire({
+                title: 'Berhasil!',
+                text: `Peminjaman telah ditolak`,
+                icon: 'success'
+              })
+
+              tablePersetujuan.ajax.reload()
+            }
+          })
+        }
+      })
+    }
+  })
 }

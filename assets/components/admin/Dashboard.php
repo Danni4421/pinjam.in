@@ -24,7 +24,7 @@
                                 ditujukan untuk digunakan oleh staf administrasi, dosen, bahkan mahasiswa atau
                                 pihak yang berwenang di universitas tersebut.</p><br>
                             <div class="mt-1">
-                                <a href="persetujuan.php"><button type="button" class="btn btn-info">Kelola Persetujuan</button></a>
+                                <a href="/admin/persetujuan"><button type="button" class="btn btn-info">Kelola Persetujuan</button></a>
                             </div>
                         </div>
                     </div>

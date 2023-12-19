@@ -1,5 +1,5 @@
 <div class="modal fade" id="detail">
-  <div class="modal-dialog modal-xl">
+  <div class="modal-dialog modal-scrollable modal-xl">
     <div class="modal-content px-3" style="background-color: #D9D9D9;">
       <div class="modal-header">
         <h4 class="modal-title"><strong>Detail Ruangan</strong></h4>
@@ -49,6 +49,11 @@
                   <th scope="row">Posisi Lantai</th>
                   <td><span id="mainModalLantai"></span></td>
                 </tr>
+                <tr>
+                  <th scope="row">Fasilitas</th>
+                  <td id="list-fasilitas" class="d-flex justify-content-between">
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
@@ -60,8 +65,8 @@
           <div class="card col-lg-12">
             <div class="card-header d-flex">
               <h3><strong>Jadwal Ruangan</strong></h3>
-              <button type="button" class="btn btn-info ml-auto" data-toggle="modal" id="mainBtnEditModal" data-target="#editJadwal">
-                Edit Jadwal Ruangan
+              <button type="button" class="btn btn-info ml-auto" data-toggle="modal" id="mainBtnAddJadwal" data-target="#modalAddJadwal">
+                Tambah Jadwal Ruangan
               </button>
             </div>
             <div class="card-body">

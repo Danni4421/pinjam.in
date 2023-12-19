@@ -2,13 +2,17 @@
 
 Router::view('/', 'user.dashboard');
 Router::view('/login', 'auth');
-Router::view('/peminjaman', 'user.peminjaman', ['user']);
+Router::view('/register', 'auth');
 Router::view('/ruang', 'user.ruang.main');
 Router::view('/ruang/kelas', 'user.ruang.kelas');
 Router::view('/ruang/auditorium', 'user.ruang.auditorium');
 Router::view('/ruang/laboratorium', 'user.ruang.laboratorium');
 Router::view('/ruang/dosen', 'user.ruang.dosen');
+Router::view('/denah', 'user.ruang.denah');
+Router::view('/peminjaman', 'user.peminjaman', ['user']);
 Router::view('/account', 'user.account', ['user']);
+Router::view('/account/riwayat', 'user.account', ['user']);
+Router::view('/account/riwayat/surat', 'user.letter', ['user']);
 Router::view('/admin', 'admin.dashboard', ['admin', 'superadmin']);
 Router::view('/admin/kalender', 'admin.kalender', ['admin', 'superadmin']);
 Router::view('/admin/persetujuan', 'admin.persetujuan', ['admin', 'superadmin']);

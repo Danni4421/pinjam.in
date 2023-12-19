@@ -13,6 +13,7 @@ class RequestContainer
         RuangRequest::class,
         PeminjamanRequest::class,
         MataKuliahRequest::class,
+        JadwalRequest::class,
         JamKuliahRequest::class,
         FasilitasRequest::class,
         SearchRuangRequest::class,

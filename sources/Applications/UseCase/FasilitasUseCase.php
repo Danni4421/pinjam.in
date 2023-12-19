@@ -29,6 +29,13 @@ class FasilitasUseCase
     );
   }
 
+  public function addFasilitasToRuang($payload)
+  {
+    foreach ($payload["fasilitas"] as $fasilitas) {
+      $this->fasilitasRepository->addIntoRuang(fasilitasId: $fasilitas, kodeRuang: $payload["kode_ruang"]);
+    }
+  }
+
   /**
    * @return array
    */
@@ -42,6 +49,27 @@ class FasilitasUseCase
         "fasilitasId" => $facility->getFasilitasId(),
         "namaFasilitas" => $facility->getNamaFasilitas(),
         "icon" => $facility->getIcon()
+      ];
+    }
+
+    return $list_fasilitas;
+  }
+
+  /**
+   * @param string $kodeRuang
+   * @return array
+   */
+  public function getFasilitasByRuang($kodeRuang)
+  {
+    $fasilitas = $this->fasilitasRepository->getByRuang($kodeRuang);
+    $list_fasilitas = [];
+
+    foreach ($fasilitas as $f) {
+      $list_fasilitas[] = [
+        "fasilitasId" => $f->getFasilitasId(),
+        "namaFasilitas" => $f->getNamaFasilitas(),
+        "icon" => $f->getIcon(),
+        "status" => $f->getStatus()
       ];
     }
 
@@ -86,5 +114,10 @@ class FasilitasUseCase
   public function deleteFasilitas($fasilitasId)
   {
     $this->fasilitasRepository->delete(fasilitasId: $fasilitasId);
+  }
+
+  public function deleteFasilitasByRuang($kodeRuang, $fasilitasId)
+  {
+    $this->fasilitasRepository->deleteByRuang(kodeRuang: $kodeRuang, fasilitasId: $fasilitasId);
   }
 }

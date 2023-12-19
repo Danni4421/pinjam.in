@@ -1,108 +1,122 @@
-<section id="panduan" class="panduan">
-            <div class="container">
-                <div class="row" data-aos="fade-up">
-                    <div class="section-title" data-aos="fade-up" style="text-align: center;">
-                        <h2>Panduan</h2>
-                        <p>Panduan Peminjaman Ruangan JTI</p>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="main-timeline7">
-                                <div class="timeline">
-                                    <div class="timeline-icon"><i style="font-style: normal;">01</i></div>
-                                    <span class="year">
-                                        <h5 class="title">Registrasi Akun</h5>
-                                    </span>
-                                    <div class="timeline-content">
-                                        <p class="description">
-                                            Lakukan registrasi akun sebelum melakukan pengajuan. Jika Anda belum
-                                            memiliki akun dengan mengisi
-                                            form pendaftaran pada Halaman Sign Up.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="timeline">
-                                    <div class="timeline-icon"><i style="font-style: normal;">02</i></div>
-                                    <span class="year">
-                                        <h5 class="title">Login Website</h5>
-                                    </span>
-                                    <div class="timeline-content">
-                                        <p class="description">
-                                            Masuk ke dalam website Jika Anda sudah memiliki akun, masuk ke dalam
-                                            platform menggunakan
-                                            kredensial Anda pada Halaman Login.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="timeline">
-                                    <div class="timeline-icon"><i style="font-style: normal;">03</i></div>
-                                    <span class="year">
-                                        <h5 class="title">Mencari Ruang</h5>
-                                    </span>
-                                    <div class="timeline-content">
-                                        <p class="description">
-                                            Cari ruangan Anda setelah masuk platform. Periksa ketersediaan ruangan pada
-                                            tanggal dan waktu yang
-                                            Anda pilih, pastikan ruangan masih tersedia.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="timeline">
-                                    <div class="timeline-icon"><i style="font-style: normal;">04</i></div>
-                                    <span class="year">
-                                        <h5 class="title">Isi Formulir Peminjaman</h5>
-                                    </span>
-                                    <div class="timeline-content">
-                                        <p class="description">
-                                            Masukkan informasi untuk melengkapi kebutuhan pengajuan. Isi formulir
-                                            peminjaman dengan informasi
-                                            yang diperlukan seperti asal instansi untuk organisasi, tanggal kegiatan,
-                                            dan keterangan.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="timeline">
-                                    <div class="timeline-icon"><i style="font-style: normal;">05</i></div>
-                                    <span class="year">
-                                        <h5 class="title">Kirim Formulir Peminjaman</h5>
-                                    </span>
-                                    <div class="timeline-content">
-                                        <p class="description">
-                                            Kirim formulir setelah mengisi form. Setelah mengisi form pastikan Anda
-                                            mengirimkan informasi yang
-                                            telah diinputkan dengan menekan tombol Ajukan Peminjaman.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="timeline">
-                                    <div class="timeline-icon"><i style="font-style: normal;">06</i></div>
-                                    <span class="year">
-                                        <h5 class="title">Cek Berkala Status Peminjaman</h5>
-                                    </span>
-                                    <div class="timeline-content">
-                                        <p class="description">
-                                            Cek status setelah mengajukan peminjaman. Periksa status peminjaman Anda
-                                            pada riwayat peminjaman
-                                            untuk melihat keterangan apakah pengajuan Anda telah disetujui atau belum.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="timeline">
-                                    <div class="timeline-icon"><i style="font-style: normal;">07</i></div>
-                                    <span class="year">
-                                        <h5 class="title">Cetak Formulir Peminjaman</h5>
-                                    </span>
-                                    <div class="timeline-content">
-                                        <p class="description">
-                                            Setelah pengajuan disetujui, cetak formulir. Formulir dicetak untuk
-                                            ditandatangani oleh peminjam
-                                            dan kemudian diserahkan kepada pihak terkait yaitu PAMDAL dan OB.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="timeline" id="panduan">
+    <div class="timeline__event  animated fadeInUp delay-3s timeline__event--type1">
+        <div class="timeline__event__icon ">
+            <i class="fas fa-newspaper"></i>
+        </div>
+        <div class="timeline__event__date">
+            1
+        </div>
+        <div class="timeline__event__content ">
+            <div class="timeline__event__title">
+                Register
             </div>
-        </section>
+            <div class="timeline__event__description">
+                <span>Lakukan registrasi akun sebelum melakukan pengajuan</span>
+                <p>Jika Anda belum memiliki akun dengan mengisi form pendaftaran pada <a href="/register" style="color: #3f43fd;">Halaman Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="timeline__event animated fadeInUp delay-2s timeline__event--type2">
+        <div class="timeline__event__icon">
+            <i class="fas fa-sign-in-alt"></i>
+        </div>
+        <div class="timeline__event__date">
+            2
+        </div>
+        <div class="timeline__event__content">
+            <div class="timeline__event__title">
+                Login
+            </div>
+            <div class="timeline__event__description">
+                <span>Masuk ke dalam website</span>
+                <p>Jika Anda belum memiliki akun untuk digunakan selama peminjaman, Anda dapat mengisi form pendaftaran pada <a href="/register" style="color: #3f43fd;">Halaman Sign Up</a></p>
+
+            </div>
+        </div>
+    </div>
+    <div class="timeline__event animated fadeInUp delay-1s timeline__event--type3">
+        <div class="timeline__event__icon">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="timeline__event__date">
+            3
+        </div>
+        <div class="timeline__event__content">
+            <div class="timeline__event__title">
+                Mencari Ruang
+            </div>
+            <div class="timeline__event__description">
+                <span>Cari ruangan Anda setelah masuk platform</span>
+                <p>Periksa ketersediaan ruangan pada tanggal dan waktu yang Anda pilih, Pastikan ruangan masih tersedia.</p>
+            </div>
+        </div>
+    </div>
+    <div class="timeline__event animated fadeInUp timeline__event--type1">
+        <div class="timeline__event__icon">
+            <i class="fas fa-pencil-alt"></i>
+        </div>
+        <div class="timeline__event__date">
+            4
+        </div>
+        <div class="timeline__event__content">
+            <div class="timeline__event__title">
+                Isi Formulir Pengajuan
+            </div>
+            <div class="timeline__event__description">
+                <span>Masukkan informasi untuk melengkapi kebutuhan pengajuan</span>
+                <p>Isi formulir peminjaman dengan informasi yang diperlukan seperti asal instansi untuk organisasi, tanggal kegiatan, dan keterangan.</p>
+            </div>
+        </div>
+    </div>
+    <div class="timeline__event animated fadeInUp delay-1s timeline__event--type2">
+        <div class="timeline__event__icon">
+            <i class="fas fa-paper-plane"></i>
+        </div>
+        <div class="timeline__event__date">
+            5
+        </div>
+        <div class="timeline__event__content">
+            <div class="timeline__event__title">
+                Kirim Formulir Pengajuan
+            </div>
+            <div class="timeline__event__description">
+                <span>Kirim formulir setelah mengisi form</span>
+                <p>Setelah mengisi form pastikan Anda mengirimkan informasi yang telah diinputkan dengan menekan tombol Ajukan Peminjaman.</p>
+            </div>
+        </div>
+    </div>
+    <div class="timeline__event animated fadeInUp delay-1s timeline__event--type3">
+        <div class="timeline__event__icon">
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="timeline__event__date">
+            6
+        </div>
+        <div class="timeline__event__content">
+            <div class="timeline__event__title">
+                Cek Berkala Status Peminjaman
+            </div>
+            <div class="timeline__event__description">
+                <span>Cek status setelah mengajukan peminjaman</span>
+                <p>Periksa status peminjaman Anda pada riwayat peminjaman untuk melihat keterangan apakah pengajuan Anda telah disetujui atau belum.</p>
+            </div>
+        </div>
+    </div>
+    <div class="timeline__event animated fadeInUp delay-1s timeline__event--type1">
+        <div class="timeline__event__icon">
+            <i class="fas fa-print"></i>
+        </div>
+        <div class="timeline__event__date">
+            7
+        </div>
+        <div class="timeline__event__content">
+            <div class="timeline__event__title">
+                Cetak Formulir Peminjaman
+            </div>
+            <div class="timeline__event__description">
+                <span>Setelah pengajuan disetujui, cetak formulir.</span>
+                <p>Formulir dicetak untuk diserahkan kepada pihak terkait yaitu PAMDAL dan OB.</p>
+            </div>
+        </div>
+    </div>
+</div>

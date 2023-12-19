@@ -3,15 +3,15 @@
 class MataKuliah
 {
     private string $mkId;
-    private string $namaMk;
-    private int $sks;
+    private ?string $namaMk;
+    private ?int $sks;
 
     /**
      * @param string $mkId
-     * @param string $namaMk
-     * @param int $sks
+     * @param ?string $namaMk
+     * @param ?int $sks
      */
-    public function __construct($mkId, $namaMk, $sks)
+    public function __construct($mkId, $namaMk = null, $sks = null)
     {
         $this->mkId = $mkId;
         $this->namaMk = $namaMk;

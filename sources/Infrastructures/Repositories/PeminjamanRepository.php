@@ -1,5 +1,7 @@
 <?php
 
+use LDAP\ResultEntry;
+
 class PeminjamanRepository implements IPeminjamanRepository
 {
     private MySQL $database;
@@ -59,19 +61,12 @@ class PeminjamanRepository implements IPeminjamanRepository
     }
 
     /**
-     * @return array
+     * @return Peminjaman[]
      */
     public function get()
     {
         $this->database->query(
-            sql: "SELECT
-            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan_mulai, p.tanggal_kegiatan_selesai, 
-            p.keterangan, p.status, p.asal_instansi, p.logo_instansi, p.jam_mulai, p.jam_selesai,
-            u.id user_id, u.username, u.email, ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
-            FROM peminjaman p
-            LEFT OUTER JOIN users u ON u.id = p.user_id
-            LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id
-            ORDER BY p.tanggal_peminjaman DESC"
+            sql: "CALL SpGetPeminjaman(@id_peminjaman := null, @id_user := null, @status := null)"
         );
 
         $result_peminjaman = $this->database->result();
@@ -100,6 +95,7 @@ class PeminjamanRepository implements IPeminjamanRepository
                 tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
                 tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
                 tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
+                tanggalPersetujuan: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
                 jamMulai: new DateTime($peminjaman["jam_mulai"]),
                 jamSelesai: new DateTime($peminjaman["jam_selesai"]),
                 keterangan: $peminjaman["keterangan"],
@@ -112,19 +108,12 @@ class PeminjamanRepository implements IPeminjamanRepository
 
     /**
      * @param string $status
-     * @return array
+     * @return Peminjaman[]
      */
     public function getPeminjamanByStatus($status)
     {
         $this->database->query(
-            sql: "SELECT
-            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan_mulai, p.tanggal_kegiatan_selesai, 
-            p.keterangan, p.status, p.jam_mulai, p.jam_selesai,
-            u.id user_id, u.username, u.email, ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
-            FROM peminjaman p
-            LEFT OUTER JOIN users u ON u.id = p.user_id
-            LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id
-            WHERE p.status = ?",
+            sql: "CALL SpGetPeminjaman(@id_peminjaman := null, @id_user := null, @status := ?)",
             params: [
                 $status
             ]
@@ -158,6 +147,7 @@ class PeminjamanRepository implements IPeminjamanRepository
                 tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
                 tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
                 tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
+                tanggalPersetujuan: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
                 jamMulai: new DateTime($peminjaman["jam_mulai"]),
                 jamSelesai: new DateTime($peminjaman["jam_selesai"]),
                 keterangan: $peminjaman["keterangan"],
@@ -170,19 +160,12 @@ class PeminjamanRepository implements IPeminjamanRepository
 
     /**
      * @param string $user_id
-     * @return array
+     * @return Peminjaman[]
      */
     public function getByUser($user_id)
     {
         $this->database->query(
-            sql: "SELECT
-            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan_mulai, p.tanggal_kegiatan_selesai, 
-            p.keterangan, p.status, p.jam_mulai, p.jam_selesai, u.id user_id, u.username, u.email, 
-            ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
-            FROM peminjaman p
-            LEFT OUTER JOIN users u ON u.id = p.user_id
-            LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id
-            WHERE p.user_id = ?",
+            sql: "CALL SpGetPeminjaman(@id_peminjaman := null, @id_user := ?, @status := null)   ",
             params: [
                 $user_id
             ]
@@ -212,6 +195,7 @@ class PeminjamanRepository implements IPeminjamanRepository
                 tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
                 tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
                 tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
+                tanggalPersetujuan: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
                 jamMulai: new DateTime($peminjaman["jam_mulai"]),
                 jamSelesai: new DateTime($peminjaman["jam_selesai"]),
                 keterangan: $peminjaman["keterangan"],
@@ -229,14 +213,7 @@ class PeminjamanRepository implements IPeminjamanRepository
     public function getById($peminjaman_id)
     {
         $this->database->query(
-            sql: "SELECT
-            p.id peminjaman_id, p.tanggal_peminjaman, p.tanggal_kegiatan_mulai, p.tanggal_kegiatan_selesai, 
-            p.keterangan, p.status, p.jam_mulai, p.jam_selesai,
-            u.id user_id, u.username, u.email, ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp
-            FROM peminjaman p
-            LEFT OUTER JOIN users u ON u.id = p.user_id
-            LEFT OUTER JOIN userdetails ud ON ud.user_id = u.id
-            WHERE p.id = ?",
+            sql: "CALL SpGetPeminjaman(@id_peminjaman := ?, @id_user := null, @status := null);",
             params: [
                 $peminjaman_id
             ]
@@ -263,7 +240,8 @@ class PeminjamanRepository implements IPeminjamanRepository
             tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
             tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
             tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
-            jamMulai: new DateTime($peminjaman["jam_mu"]),
+            tanggalPersetujuan: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
+            jamMulai: new DateTime($peminjaman["jam_mulai"]),
             jamSelesai: new DateTime($peminjaman["jam_selesai"]),
             keterangan: $peminjaman["keterangan"],
             status: $peminjaman["status"]

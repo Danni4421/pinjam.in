@@ -61,10 +61,15 @@ class PeminjamanUseCase
   }
 
   /**
+   * ?@param int $userId
    * @return Peminjaman[]
    */
-  public function getPeminjaman()
+  public function getPeminjaman($userId = null)
   {
+    if (!is_null($userId)) {
+      return $this->peminjamanRepository->getByUser($userId);
+    }
+
     return $this->peminjamanRepository->get();
   }
 
@@ -118,7 +123,7 @@ class PeminjamanUseCase
       "jamMulai" => $jamMulai->format("H:i:s"),
       "jamSelesai" => $jamSelesai->format("H:i:s"),
       "status" => $payload["status"],
-      "peminjamanId" => $payload["peminjamanId"] 
+      "peminjamanId" => $payload["peminjamanId"]
     ]);
   }
 

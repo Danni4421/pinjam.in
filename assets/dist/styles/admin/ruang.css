@@ -46,3 +46,47 @@
   color: #fff;
   /* Button text color on hover */
 }
+
+.btn-jadwal {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: #0056b3;
+  color: #fff;
+  border-radius: 20px;
+}
+
+.fasilitas {
+  padding: 8px;
+  border-radius: 10px;
+  margin-right: 3px;
+}
+
+#modal-fasilitas {
+  width: 100%;
+}
+
+#modal-fasilitas .list-item-fasilitas {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+.btn-delete-fasilitas {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border: none;
+  border-radius: 50%;
+}
+
+.select-fasilitas option{
+  color: #000 !important;
+}

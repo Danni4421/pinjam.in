@@ -4,16 +4,16 @@ class Fasilitas
 {
     private int $fasilitasId;
     private string $namaFasilitas;
-    private string $icon;
+    private ?string $icon;
     private string $status;
 
     /**
      * @param int $fasilitasId
      * @param string $namaFasilitas
-     * @param string $icon
+     * @param ?string $icon
      * @param string $status
      */
-    public function __construct($fasilitasId, $namaFasilitas, $icon, $status)
+    public function __construct($fasilitasId, $namaFasilitas, $icon = null, $status)
     {
         $this->fasilitasId = $fasilitasId;
         $this->namaFasilitas = $namaFasilitas;

@@ -9,7 +9,7 @@ class MySQL extends Database
             hostname: "localhost",
             username: "developer",
             password: "01001111",
-            database: "pinjam_in"
+            database: "pinjam.in"
         );
         $this->connect();
         $this->statement = null;
@@ -20,7 +20,7 @@ class MySQL extends Database
         if (!is_null($this->statement)) {
             $this->statement->close();
             $this->statement = null;
-        }
+        }   
     }
 
     public function connect(): void
@@ -84,7 +84,9 @@ class MySQL extends Database
 
     public function result(): mixed
     {
-        return $this->statement->get_result();
+        $result = $this->statement->get_result();
+        while ($this->connection->next_result()){}
+        return $result;
     }
 
     public function get_last_inserted_id(): mixed
