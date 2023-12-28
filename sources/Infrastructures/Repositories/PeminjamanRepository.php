@@ -1,7 +1,5 @@
 <?php
 
-use LDAP\ResultEntry;
-
 class PeminjamanRepository implements IPeminjamanRepository
 {
     private MySQL $database;
@@ -20,17 +18,8 @@ class PeminjamanRepository implements IPeminjamanRepository
         $peminjam = $peminjaman->getPeminjam();
 
         $this->database->query(
-            sql: "INSERT INTO peminjaman (
-                tanggal_peminjaman, 
-                tanggal_kegiatan_mulai, 
-                tanggal_kegiatan_selesai, 
-                keterangan, 
-                asal_instansi, 
-                status, 
-                user_id, 
-                jam_mulai, 
-                jam_selesai, 
-                logo_instansi) 
+            sql: "INSERT INTO peminjaman (tanggal_peminjaman, tanggal_kegiatan_mulai, tanggal_kegiatan_selesai, keterangan, 
+                asal_instansi, status, user_id, jam_mulai, jam_selesai, logo_instansi) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             params: [
                 $peminjaman->getTanggalPeminjaman()->format("Y-m-d"),
@@ -95,7 +84,7 @@ class PeminjamanRepository implements IPeminjamanRepository
                 tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
                 tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
                 tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
-                tanggalPersetujuan: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
+                tanggalDisetujui: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
                 jamMulai: new DateTime($peminjaman["jam_mulai"]),
                 jamSelesai: new DateTime($peminjaman["jam_selesai"]),
                 keterangan: $peminjaman["keterangan"],
@@ -147,7 +136,7 @@ class PeminjamanRepository implements IPeminjamanRepository
                 tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
                 tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
                 tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
-                tanggalPersetujuan: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
+                tanggalDisetujui: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
                 jamMulai: new DateTime($peminjaman["jam_mulai"]),
                 jamSelesai: new DateTime($peminjaman["jam_selesai"]),
                 keterangan: $peminjaman["keterangan"],
@@ -195,7 +184,7 @@ class PeminjamanRepository implements IPeminjamanRepository
                 tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
                 tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
                 tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
-                tanggalPersetujuan: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
+                tanggalDisetujui: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
                 jamMulai: new DateTime($peminjaman["jam_mulai"]),
                 jamSelesai: new DateTime($peminjaman["jam_selesai"]),
                 keterangan: $peminjaman["keterangan"],
@@ -240,7 +229,7 @@ class PeminjamanRepository implements IPeminjamanRepository
             tanggalPeminjaman: new DateTime($peminjaman["tanggal_peminjaman"]),
             tanggalKegiatanMulai: new DateTime($peminjaman["tanggal_kegiatan_mulai"]),
             tanggalKegiatanSelesai: new DateTime($peminjaman["tanggal_kegiatan_selesai"]),
-            tanggalPersetujuan: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
+            tanggalDisetujui: !is_null($peminjaman["tanggal_peminjaman"]) ? new DateTime($peminjaman["tanggal_peminjaman"]) : null,
             jamMulai: new DateTime($peminjaman["jam_mulai"]),
             jamSelesai: new DateTime($peminjaman["jam_selesai"]),
             keterangan: $peminjaman["keterangan"],
@@ -304,13 +293,6 @@ class PeminjamanRepository implements IPeminjamanRepository
      */
     public function delete($peminjamanId)
     {
-        $this->database->query(
-            sql: 'DELETE FROM detailpeminjaman WHERE peminjaman_id = ?',
-            params: [
-                $peminjamanId
-            ]
-        );
-
         $this->database->query(
             sql: "DELETE FROM peminjaman WHERE id = ?",
             params: [

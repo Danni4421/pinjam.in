@@ -24,28 +24,30 @@ $(document).ready(function () {
     }
   })
 
-  const url = window.location.search;
-  const params = new URLSearchParams(url);
-  const selectedKodeRuang = params.has('kode') ? params.get('kode').split(',') : [];
+  const url = window.location.search
+  const params = new URLSearchParams(url)
+  const selectedKodeRuang = params.has('kode') ? params.get('kode').split(',') : []
 
-  if (selectedKodeRuang)  {
+  if (selectedKodeRuang) {
     const startDate = $('#tanggal_kegiatan_mulai').val()
     const endDate = $('#tanggal_kegiatan_selesai').val()
     const jamMulai = $('#jam_mulai').val()
     const jamSelesai = $('#jam_selesai').val()
 
-    $('.select-ruang').find('option').each(function() {
-    const optionValue = $(this).val();
+    $('.select-ruang')
+      .find('option')
+      .each(function () {
+        const optionValue = $(this).val()
 
-    if (selectedValues.includes(optionValue)) {
-        $(this).prop('selected', true);
-      } else {
-        $(this).prop('selected', false);
-      }
-    });
+        if (selectedValues.includes(optionValue)) {
+          $(this).prop('selected', true)
+        } else {
+          $(this).prop('selected', false)
+        }
+      })
 
-    $('.select-ruang').select2().trigger('change');
-    verifyAvailabilityRuang(selectedKodeRuang, {startDate, endDate, jamMulai, jamSelesai})
+    $('.select-ruang').select2().trigger('change')
+    verifyAvailabilityRuang(selectedKodeRuang, { startDate, endDate, jamMulai, jamSelesai })
   }
 
   // On Change Ruang Selection
@@ -55,7 +57,7 @@ $(document).ready(function () {
     const jamMulai = $('#jam_mulai').val()
     const jamSelesai = $('#jam_selesai').val()
     let selectedRuang = $('.select-ruang').val()
-    
+
     if (selectedKodeRuang) {
       selectedRuang = selectedRuang.concat(selectedKodeRuang)
     }
@@ -115,14 +117,14 @@ $(document).ready(function () {
 
   // Print Ruang
   function printRuang(ruang) {
-    $('.select-ruang').empty();
+    $('.select-ruang').empty()
 
     $.each(ruang, function (index, item) {
-      const option = new Option(item.namaRuang, item.kodeRuang);
-      $('.select-ruang').append(option);
-    });
+      const option = new Option(item.namaRuang, item.kodeRuang)
+      $('.select-ruang').append(option)
+    })
 
-    $('.select-ruang').select2();
+    $('.select-ruang').select2()
   }
 
   // Print Selected Ruang
@@ -243,6 +245,12 @@ $(document).ready(function () {
             $('#jam_selesai').val('')
             $('#foto_instansi').val('')
             $('#selected-ruang').html('')
+
+            Swal.fire({
+              title: 'Berhasil!',
+              text: `Berhasil meminjam ruangan.`,
+              icon: 'success'
+            })
           }
         })
       }

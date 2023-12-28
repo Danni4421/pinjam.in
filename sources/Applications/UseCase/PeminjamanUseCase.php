@@ -51,6 +51,7 @@ class PeminjamanUseCase
         tanggalPeminjaman: new DateTime($payload["tanggal_peminjaman"]),
         tanggalKegiatanMulai: new DateTime($payload["tanggal_kegiatan_mulai"]),
         tanggalKegiatanSelesai: new DateTime($payload["tanggal_kegiatan_selesai"]),
+        tanggalDisetujui: null,
         jamMulai: new DateTime($payload["jam_mulai"]),
         jamSelesai: new DateTime($payload["jam_selesai"]),
         keterangan: $payload["keterangan"],

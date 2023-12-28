@@ -62,8 +62,7 @@ class UserRepository implements IUserRepository
                 u.id user_id, u.username, u.email, u.level, 
                 ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
             FROM users u 
-            JOIN userdetails ud ON ud.user_id = u.id
-            WHERE ud.is_dosen != 1"
+            JOIN userdetails ud ON ud.user_id = u.id"
         );
 
         $result = $this->database->result();

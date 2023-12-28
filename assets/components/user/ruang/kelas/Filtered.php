@@ -43,32 +43,32 @@
                   <li class=" breadcrumb-item active" aria-current="page" id="kelas-active">LSI1</li>
                 </ol>
               </nav>
-              <main>
+              <main class="w-100">
                 <div class="card-body p-0">
                   <table class="table table-striped">
-                    <tr>
-                      <th scope="row">Kode Ruang</th>
-                      <td><span id="modal-kode-ruang"></span></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Nama Ruang</th>
-                      <td><span id="modal-nama-ruang"></span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Kapasitas</th>
-                      <td><span id="modal-kapasitas"></span> orang
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Posisi Lantai</th>
-                      <td><span id="modal-lantai"></span></td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Kode Ruang</th>
+                        <td><span id="modal-kode-ruang"></span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Nama Ruang</th>
+                        <td><span id="modal-nama-ruang"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Kapasitas</th>
+                        <td><span id="modal-kapasitas"></span> orang
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Posisi Lantai</th>
+                        <td><span id="modal-lantai"></span></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
                 <div class="facilities d-flex gap-2" id="modal-facilities">
-
                 </div>
               </main>
             </div>

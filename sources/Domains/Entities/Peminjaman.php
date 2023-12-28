@@ -7,7 +7,7 @@ class Peminjaman implements HasRequest
     private DateTime $tanggalPeminjaman;
     private DateTime $tanggalKegiatanMulai;
     private DateTime $tanggalKegiatanSelesai;
-    private ?DateTime $tanggalPersetujuan;
+    private ?DateTime $tanggalDisetujui;
     private DateTime $jamMulai;
     private DateTime $jamSelesai;
     private string $keterangan;
@@ -24,21 +24,21 @@ class Peminjaman implements HasRequest
      * @param DateTime $tanggalPeminjaman
      * @param DateTime $tanggalKegiatanMulai
      * @param DateTime $tanggalKegiatanSelesai
-     * @param ?DateTime $tanggalPersetujuan
+     * @param ?DateTime $tanggalDisetujui
      * @param DateTime $jamMulai
      * @param DateTime $jamSelesai
      * @param string $keterangan
      * @param string $status
      * @param ?Ruang[] $ruang
      */
-    public function __construct($peminjamanId, $peminjam, $tanggalPeminjaman, $tanggalKegiatanMulai, $tanggalKegiatanSelesai, $tanggalPersetujuan = null, $jamMulai, $jamSelesai, $keterangan, $status, $ruang = null)
+    public function __construct($peminjamanId, $peminjam, $tanggalPeminjaman, $tanggalKegiatanMulai, $tanggalKegiatanSelesai, $tanggalDisetujui = null, $jamMulai, $jamSelesai, $keterangan, $status, $ruang = null)
     {
         $this->peminjamanId = $peminjamanId;
         $this->peminjam = $peminjam;
         $this->tanggalPeminjaman = $tanggalPeminjaman;
         $this->tanggalKegiatanMulai = $tanggalKegiatanMulai;
         $this->tanggalKegiatanSelesai = $tanggalKegiatanSelesai;
-        $this->tanggalPersetujuan = $tanggalPersetujuan;
+        $this->tanggalDisetujui = $tanggalDisetujui;
         $this->jamMulai = $jamMulai;
         $this->jamSelesai = $jamSelesai;
         $this->keterangan = $keterangan;
@@ -73,7 +73,7 @@ class Peminjaman implements HasRequest
 
     public function getTanggalPersetujuan()
     {
-        return $this->tanggalPersetujuan;
+        return $this->tanggalDisetujui;
     }
 
     public function getJamMulai()

@@ -7,20 +7,6 @@ class RuangKelasRepository extends RuangRepository
         parent::__construct(database: $database);
     }
 
-    public function addJadwal(Ruang $ruang, Jadwal $jadwal): void
-    {
-        $this->database->query(
-            sql: "INSERT INTO jadwal (kode_ruang, hari, mk_id, jk_mulai, jk_selesai) VALUES (?, ?, ?, ?, ?)",
-            params: [
-                $ruang->getKodeRuang(),
-                $jadwal->getHari(),
-                $jadwal->getMataKuliah()->getMkId(),
-                $jadwal->getJamMulai()->getJkId(),
-                $jadwal->getJamSelesai()->getJkId()
-            ]
-        );
-    }
-
     /**
      * @return array
      */
@@ -189,65 +175,5 @@ class RuangKelasRepository extends RuangRepository
         }
 
         return $jadwal;
-    }
-
-    /**
-     * @param Jadwal $jadwal
-     * @return void
-     */
-    public function updateJadwal($jadwal)
-    {
-        $this->database->query(
-            sql: "UPDATE jadwal SET
-                    hari = ?,
-                    mk_id = ?,
-                    jk_mulai = ?,
-                    jk_selesai = ?
-                WHERE id = ?",
-            params: [
-                $jadwal->getHari(),
-                $jadwal->getMataKuliah()->getMkId(),
-                $jadwal->getJamMulai()->getJkId(),
-                $jadwal->getJamSelesai()->getJkId(),
-                $jadwal->getJadwalId()
-            ]
-        );
-    }
-
-    /**
-     * @param RuangKelas $ruang
-     * @return void
-     */
-    public function updateRuang($ruang)
-    {
-        $this->database->query(
-            sql: "UPDATE ruang SET
-                    nama_ruang = ?,
-                    kapasitas = ?,
-                    lantai = ?,
-                    foto_ruang = ?
-                WHERE kode_ruang = ?",
-            params: [
-                $ruang->getNamaRuang(),
-                $ruang->getKapasitas(),
-                $ruang->getLantai(),
-                $ruang->getFotoRuang(),
-                $ruang->getKodeRuang()
-            ]
-        );
-    }
-
-    /**
-     * @param Jadwal $jadwal
-     * @return void
-     */
-    public function deleteJadwal($jadwal)
-    {
-        $this->database->query(
-            sql: "DELETE FROM jadwal WHERE id = ?",
-            params: [
-                $jadwal->getJadwalId()
-            ]
-        );
     }
 }

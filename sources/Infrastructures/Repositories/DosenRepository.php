@@ -93,43 +93,4 @@ class DosenRepository extends UserRepository
             ),
         );
     }
-
-    /**
-     * @param Ruang $ruang
-     * @return array
-     */
-    public function getByRuang($ruang)
-    {
-        $this->database->query(
-            sql: 'SELECT
-            u.id user_id, u.username, u.email, u.level, 
-            ud.nomor_induk, ud.nama_lengkap, ud.alamat, ud.no_telp, ud.foto_profil
-            FROM users u JOIN userdetails ud ON ud.user_id = u.id
-            WHERE ud.kode_ruang = ? AND ud.is_dosen = 1',
-            params: [
-                $ruang->getKodeRuang(),
-            ]
-        );
-
-        $result = $this->database->result();
-        $users = [];
-
-        while ($row = $result->fetch_assoc()) {
-            $users[] = new User(
-                id: $row["user_id"],
-                username: $row["username"],
-                email: $row["email"],
-                role: $row["level"],
-                userDetails: new UserDetails(
-                    nomorInduk: $row["nomor_induk"],
-                    namaLengkap: $row["nama_lengkap"],
-                    alamat: $row["alamat"],
-                    noTelp: $row["no_telp"],
-                    fotoProfil: $row["foto_profil"]
-                ),
-            );
-        }
-
-        return $users;
-    }
 }
